@@ -68,6 +68,7 @@ public class MyView extends GLSurfaceView
         assetManager = getResources().getAssets();
         SmasherCPP.assetLoad(assetManager);
         SmasherCPP.loadTriangleShader();
+//        JavaToCppWrapper.loadAssetManager(assetManager);
     }
 
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {

@@ -40,13 +40,14 @@ public class IntroActivity extends Activity
         //delete that
 
         assetManager = getResources().getAssets();
-        try {
-            String[] listOfAsset = assetManager.list("Shaders");
-            Log.w(TAG, String.format("ArrayLength = %s", listOfAsset.length));
-            Log.w(TAG, String.format("listOfAsset = %s", listOfAsset[0]));
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-        }
+//        try {
+//            String[] listOfAsset = assetManager.list("Shaders");
+//            Log.w(TAG, String.format("ArrayLength = %s", listOfAsset.length));
+//            Log.w(TAG, String.format("listOfAsset = %s", listOfAsset[0]));
+//        } catch (IOException e) {
+//            Log.e(TAG, e.getMessage());
+//        }
+        JavaToCppWrapper.loadAssetManager(assetManager);
 //        loadAssetManager(assetManager); //doesn't work
 //        displayString("this is working");
     }

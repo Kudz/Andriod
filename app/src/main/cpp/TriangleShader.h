@@ -17,16 +17,13 @@ class TriangleShader
 {
     public:
         TriangleShader();
-        TriangleShader(std::string path);
         TriangleShader(std::string vertexShader, std::string fragmentShader);
         ~TriangleShader();
         GLuint getProgramID(int part);
     private:
         GLuint ShaderIds[3];
-        std::string path;
-        void compileProgram();
         void compileProgram(std::string vertexShader, std::string fragmentShader);
-        GLuint loadShader(GLenum shaderType, const char* pSource);
+//        GLuint loadShader(GLenum shaderType, const char* pSource);
 };
 
 

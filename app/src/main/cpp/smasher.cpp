@@ -157,11 +157,11 @@ GLfloat gTriangleVertices[] = { -xOffset + middleX, yOffset, -xOffset + middleX,
 
 void renderFrame()
 {
-    static float grey = 1.0f;
-    glClearColor(grey, grey, grey, 1.0f);
-    checkGlError("glClearColor");
-    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    checkGlError("glClear");
+//    static float grey = 1.0f;
+//    glClearColor(grey, grey, grey, 1.0f);
+//    checkGlError("glClearColor");
+//    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+//    checkGlError("glClear");
 
     glUseProgram(gProgram);
     checkGlError("glUseProgram");

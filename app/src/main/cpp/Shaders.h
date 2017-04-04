@@ -18,6 +18,7 @@
 #define  LOG_SHADER_E(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_SHADER_TAG,__VA_ARGS__)
 
 GLuint LoadShader(std::string filename, GLenum shader_type);
+GLuint LoadShader(GLenum shaderType, const char* text);
 void DisplayGLError(const char* error_message);
 
 #endif //GAME_SHADER_H

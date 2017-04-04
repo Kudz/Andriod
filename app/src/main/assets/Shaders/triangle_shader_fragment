@@ -1,4 +1,4 @@
-#version 330
+#version 200
 in vec4 col;
 out vec4 vFragColor;
 void main(){

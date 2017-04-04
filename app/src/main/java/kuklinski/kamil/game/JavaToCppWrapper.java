@@ -14,4 +14,7 @@ public class JavaToCppWrapper
     }
 
     public static native void loadAssetManager(AssetManager mgr);
+    public static native void initializeScene(int width, int height);
+    public static native void cleanScene();
+    public static native void makeStep();
 }

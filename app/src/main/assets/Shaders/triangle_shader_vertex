@@ -1,4 +1,4 @@
-#version 330
+#version 200
 layout(location=0) in vec4 in_Position;
 uniform mat4 P; //projection matrix
 uniform mat4 V; //view matrix

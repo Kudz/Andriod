@@ -24,7 +24,6 @@ public class MyView extends GLSurfaceView
 {
     private static String TAG = "MyView";
     private static final boolean DEBUG = false;
-    private AssetManager assetManager;
 
     public MyView(Context context) {
         super(context);
@@ -64,11 +63,9 @@ public class MyView extends GLSurfaceView
         /* Set the renderer responsible for frame rendering */
         setRenderer(new Renderer());
 
-        /* Sending AssetManagerToCPP */
-        assetManager = getResources().getAssets();
-        SmasherCPP.assetLoad(assetManager);
-        SmasherCPP.loadTriangleShader();
-//        JavaToCppWrapper.loadAssetManager(assetManager);
+        // load AssetManager to CPP
+        AssetManager assetManager = getResources().getAssets();
+        JavaToCppWrapper.loadAssetManager(assetManager);
     }
 
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
@@ -288,7 +285,9 @@ public class MyView extends GLSurfaceView
     }
 
     private static class Renderer implements GLSurfaceView.Renderer {
-        public void onDrawFrame(GL10 gl) {
+        public void onDrawFrame(GL10 gl)
+        {
+            JavaToCppWrapper.makeStep();
             SmasherCPP.step();
         }
 
@@ -297,7 +296,7 @@ public class MyView extends GLSurfaceView
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            // Do nothing.
+
         }
 
     }
@@ -307,7 +306,8 @@ public class MyView extends GLSurfaceView
     private float mPreviousY;
 
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
+    public boolean onTouchEvent(MotionEvent e)
+    {
         // MotionEvent reports input details from the touch screen
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
@@ -321,21 +321,11 @@ public class MyView extends GLSurfaceView
                 float dx = x - mPreviousX;
                 float dy = y - mPreviousY;
                 SmasherCPP.moveBoard(dx, dy);
-//                Log.w(TAG, String.format("actualX = %f", x));
-//                Log.w(TAG, String.format("previousX = %f", mPreviousX));
         }
 
         mPreviousX = x;
         mPreviousY = y;
 
-        //delete that
-//        IntroActivity.displayString("sda");
-//        SmasherCPP.assetLoad(assetManager);
-//        String greeting = "Hello world!";
-//        SmasherCPP.displayString(greeting);
-
         return true;
     }
-
-
 }

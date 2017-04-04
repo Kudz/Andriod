@@ -62,3 +62,16 @@ void DisplayGLError(const char* error_message)
         LOG_SHADER_I("after %s() glError (0x%x)\n", error_message, error);
     }
 }
+
+GLuint LoadShader(GLenum shaderType, const char* text)
+{
+    GLuint shader_id = 0;
+    if (0 != (shader_id = glCreateShader(shaderType)))
+    {
+        glShaderSource(shader_id, 1, &text, NULL);
+        glCompileShader(shader_id);
+        DisplayGLError("Could not compile a shader");
+    }
+
+    return shader_id;
+}

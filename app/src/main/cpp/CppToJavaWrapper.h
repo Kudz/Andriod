@@ -19,17 +19,22 @@
 #include <string>
 #include <memory>
 
+#include "GameScene.h"
 #include "TriangleShader.h"
+#include "SharedData.h"
 
-#define  LOG_TAG    "CppToJava"
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOG_CPP_TO_JAVA_TAG    "CppToJava"
+#define  LOG_CPP_TO_JAVA_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_CPP_TO_JAVA_TAG,__VA_ARGS__)
+#define  LOG_CPP_TO_JAVA_E(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_CPP_TO_JAVA_TAG,__VA_ARGS__)
 
 namespace CppToJava
 {
     extern "C"
     {
         JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_loadAssetManager(JNIEnv *env, jobject instance, jobject mgr);
+        JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeScene(JNIEnv *env, jobject instance, jint width, jint height);
+        JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_makeStep(JNIEnv *env, jobject instance);
+        JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_cleanScene(JNIEnv *env, jobject instance);
     }
 };
 

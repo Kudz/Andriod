@@ -11,6 +11,8 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
+import android.graphics.Point;
+import android.view.Display;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +25,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class IntroActivity extends Activity
 {
-    private static String TAG = "MyActivity";
+    private static String TAG = "IntroActivity";
 
 //    public static native void loadAssetManager(AssetManager mgr);
 //    public static native void displayString(String mgr);
@@ -47,9 +49,16 @@ public class IntroActivity extends Activity
 //        } catch (IOException e) {
 //            Log.e(TAG, e.getMessage());
 //        }
-        JavaToCppWrapper.loadAssetManager(assetManager);
-//        loadAssetManager(assetManager); //doesn't work
-//        displayString("this is working");
+//        JavaToCppWrapper.loadAssetManager(assetManager);
+
+        // initialize scene cpp
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+//        Log.w(TAG, String.format("heigth intorActivity = %d", height));
+        JavaToCppWrapper.initializeScene(width, height);
     }
 
     @Override protected void onPause()
@@ -64,5 +73,11 @@ public class IntroActivity extends Activity
         mView.onResume();
     }
 
+    @Override protected void onDestroy()
+    {
+        super.onDestroy();
+        //cleaning cpp stuff
+        JavaToCppWrapper.cleanScene();
+    }
 }
 

@@ -52,6 +52,20 @@ public class IntroActivity extends Activity
 //        JavaToCppWrapper.loadAssetManager(assetManager);
     }
 
+    @Override protected void onStart()
+    {
+        super.onStart();
+
+        // initialize scene cpp, dosen't work opengl es 2 context not loaded
+//        Display display = getWindowManager().getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+//        int width = size.x;
+//        int height = size.y;
+//        JavaToCppWrapper.initializeScene(width, height);
+//        mView.onPause();
+    }
+
     @Override protected void onPause()
     {
         super.onPause();

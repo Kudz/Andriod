@@ -41,6 +41,8 @@ void TriangleDrawing::CreateBuffers()
     ModelMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "M");
     ColourVectorUniformLocation = glGetUniformLocation(this->ProgramID, "vertColor");
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not get the shader uniform locations");
+    _vertexPositionAttributeLocation = glGetAttribLocation(this->ProgramID, "vPosition");
+    SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not get the shader attribute locations");
     glGenBuffers(1, &this->_buffer);
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not generate the buffer objects");
     glBindBuffer(GL_ARRAY_BUFFER, this->_buffer); ///GL_ARRAY_BUFFER, which signifies that the data provided contains vertex attributes
@@ -81,10 +83,8 @@ void TriangleDrawing::setColour(float red, float green, float blue, float alpha)
 
 void TriangleDrawing::draw(glm::mat4* per, glm::mat4* vis)
 {
-//  std::cout<<"DrawingBase::draw begining"<<std::endl;
-//  std::cout<<"this->ProgramID = "<<this->ProgramID<<std::endl;
-    std::string message = "ProgramID = " + a2s<int>(this->ProgramID);
-    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
+//    std::string message = "ProgramID = " + a2s<int>(this->ProgramID);
+//    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
     glUseProgram(this->ProgramID);
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not use the shader program");
 
@@ -101,15 +101,20 @@ void TriangleDrawing::draw(glm::mat4* per, glm::mat4* vis)
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, glm::to_string(this->ColourVector).c_str());
     glUniform4fv(this->ColourVectorUniformLocation, 1, glm::value_ptr(this->ColourVector));
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not set the shader uniforms");
-//  std::cout<<"this->BufferIds[0] = "<<this->BufferIds[0]<<std::endl;
+
+    glBindBuffer(GL_ARRAY_BUFFER, this->_buffer);
+
     if(this->BuffersFrequency > 0)
     {
         glBindBuffer(GL_ARRAY_BUFFER, this->_buffer);
         glBufferSubData(GL_ARRAY_BUFFER,  0,  sizeof(GLfloat)*this->VertexNumber*3,  this->Vertices);
     }
+
+    glVertexAttribPointer(_vertexPositionAttributeLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(_vertexPositionAttributeLocation);
     glDrawArrays(GL_TRIANGLES, 0, this->VertexNumber);
-//  glDrawElements(GL_LINES, this->VertexNumber, GL_UNSIGNED_INT, (GLvoid*)0);
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR:  Could not draw object");
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glUseProgram(0);
 }
 

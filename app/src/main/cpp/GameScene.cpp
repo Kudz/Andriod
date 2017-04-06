@@ -14,6 +14,7 @@ GameScene::GameScene()
 
     if(this->_boardDrawable == NULL)
     {
+        SharedData::logInfo(LOG_GAME_SCENE_TAG, "creating boardDrawable");
         this->_boardDrawable = std::shared_ptr<TriangleDrawing> (new TriangleDrawing(SharedData::getTriangleShader()->getProgramID(0), this->_board, 1));
         this->_boardDrawable->setColour(1.0f, 0.0f, 0.5f, 1.0f);
     }
@@ -35,7 +36,7 @@ void GameScene::render()
     glm::mat4 per(1.0f);
     glm::mat4 vis(1.0f);
 //    SharedData::logInfo(LOG_GAME_SCENE_TAG, glm::to_string(per).c_str());
-//    _boardDrawable->draw(&per, &vis);
+    _boardDrawable->draw(&per, &vis);
 }
 
 void GameScene::clearBackground()

@@ -37,6 +37,7 @@ private:
     GLuint ViewMatrixUniformLocation;
     GLuint ModelMatrixUniformLocation;
     GLuint ColourVectorUniformLocation;
+    GLuint _vertexPositionAttributeLocation;
     GLuint _buffer;
     int VertexNumber;
     GLuint ProgramID;

@@ -30,23 +30,9 @@ namespace CppToJava
         // setting scene resolution
         SharedData::setScreenResolution(width, height);
 
-        std::string message = "use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
-        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
-        message = "second use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
-        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
-
-        // making triangle shaders
-        int useCunter = SharedData::getTriangleShader().use_count();
-        std::string vertexShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_v");
-        std::string fragmentShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_fragment");
-        std::shared_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader));
-        SharedData::setTriangleShader(triangleShader);
-
-//        message = "use count after = " + a2s<int>(SharedData::getTriangleShader().use_count());
-//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
-
         //making Scene
-        gameScene = std::shared_ptr<GameScene>(new GameScene);
+//        gameScene = std::shared_ptr<GameScene>(new GameScene);
+        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
         LOG_CPP_TO_JAVA_I("scene initializing complete");
     }
 
@@ -60,4 +46,23 @@ namespace CppToJava
 
     }
 
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeShader(JNIEnv *env, jobject instance)
+    {
+        std::string message = "use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
+        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+
+        // making triangle shaders
+        int useCunter = SharedData::getTriangleShader().use_count();
+        if(useCunter)
+        {
+            SharedData::setTriangleShader(nullptr);
+        }
+        std::string vertexShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_v");
+        std::string fragmentShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_fragment");
+//        std::unique_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader));
+        std::shared_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader), TriangleShaderNamespace::freeBuffers);
+        SharedData::setTriangleShader(triangleShader);
+
+        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, "end of initialization");
+    }
 }

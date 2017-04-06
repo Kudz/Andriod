@@ -25,5 +25,9 @@ class TriangleShader
         void compileProgram(std::string vertexShader, std::string fragmentShader);
 };
 
+namespace TriangleShaderNamespace
+{
+    void freeBuffers(TriangleShader* triangleShaderData);
+}
 
 #endif //GAME_SHADER_H

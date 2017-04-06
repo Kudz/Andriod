@@ -43,11 +43,24 @@ GLuint TriangleShader::getProgramID(int part)
 
 TriangleShader::~TriangleShader()
 {
-    LOG_TRIANGLE_SHADER_I("TriangleShader destructor");
-    glDetachShader(this->ShaderIds[0], this->ShaderIds[1]);
-    glDetachShader(this->ShaderIds[0], this->ShaderIds[2]);
-    glDeleteShader(this->ShaderIds[1]);
-    glDeleteShader(this->ShaderIds[2]);
-    glDeleteProgram(this->ShaderIds[0]);
-    DisplayGLError("ERROR: Could not destroy the shaders");
+//    LOG_TRIANGLE_SHADER_I("TriangleShader destructor");
+//    glDetachShader(this->ShaderIds[0], this->ShaderIds[1]);
+//    glDetachShader(this->ShaderIds[0], this->ShaderIds[2]);
+//    glDeleteShader(this->ShaderIds[1]);
+//    glDeleteShader(this->ShaderIds[2]);
+//    glDeleteProgram(this->ShaderIds[0]);
+//    DisplayGLError("ERROR: Could not destroy the shaders");
+}
+
+namespace  TriangleShaderNamespace {
+    void freeBuffers(TriangleShader *triangleShaderData) {
+        //it seems that when new onSurfaceCreated is called there is not possible to detach shaders
+        LOG_TRIANGLE_SHADER_I("TriangleShader destructor");
+//        glDetachShader(triangleShaderData->getProgramID(0), triangleShaderData->getProgramID(1));
+//        glDetachShader(triangleShaderData->getProgramID(0), triangleShaderData->getProgramID(2));
+//        glDeleteShader(triangleShaderData->getProgramID(1));
+//        glDeleteShader(triangleShaderData->getProgramID(2));
+//        glDeleteProgram(triangleShaderData->getProgramID(0));
+        DisplayGLError("ERROR: Could not destroy the shaders");
+    }
 }

@@ -11,6 +11,7 @@ namespace SharedData
         AAssetManager* assetManager;
         int screenWidth;
         int screenHeight;
+//        std::unique_ptr<TriangleShader> triangleShader;
         std::shared_ptr<TriangleShader> triangleShader;
     }
 
@@ -28,13 +29,28 @@ namespace SharedData
 
     void setTriangleShader(std::shared_ptr<TriangleShader> triangleShaderData)
     {
-        triangleShader = triangleShaderData;
+        LOG_SHARED_DATA_I("setTriangleShader beginning");
+        triangleShader = std::move(triangleShaderData);
+        LOG_SHARED_DATA_I("setTriangleShader ending");
     }
 
     std::shared_ptr<TriangleShader> getTriangleShader()
     {
         return triangleShader;
     }
+
+//    void setTriangleShader(std::unique_ptr<TriangleShader> triangleShaderData)
+//    {
+//        LOG_SHARED_DATA_I("setTriangleShader beginning");
+//        triangleShader = std::move(triangleShaderData);
+////        triangleShader = triangleShaderData;
+//        LOG_SHARED_DATA_I("setTriangleShader ending");
+//    }
+//
+//    std::unique_ptr<TriangleShader> getTriangleShader()
+//    {
+//        return triangleShader;
+//    }
 
     int getScreenWidth()
     {

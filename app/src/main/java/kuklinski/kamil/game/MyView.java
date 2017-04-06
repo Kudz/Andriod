@@ -295,12 +295,13 @@ public class MyView extends GLSurfaceView
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             SmasherCPP.init(width, height);
-            // initialize scene cpp
+//             initialize scene cpp
             JavaToCppWrapper.initializeScene(width, height);
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-
+            Log.w(TAG, "onSurfaceCreated");
+            JavaToCppWrapper.initializeShader();
         }
 
     }

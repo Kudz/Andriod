@@ -44,6 +44,8 @@ namespace SharedData
     void setScreenResolution(int width, int height);
     void setTriangleShader(std::shared_ptr<TriangleShader> triangleShaderData);
     std::shared_ptr<TriangleShader> getTriangleShader();
+//    void setTriangleShader(std::unique_ptr<TriangleShader> triangleShaderData);
+//    std::unique_ptr<TriangleShader> getTriangleShader();
     int getScreenWidth();
     int getScreenHeight();
     std::string getContentOfAssetFile(const char* fileName);

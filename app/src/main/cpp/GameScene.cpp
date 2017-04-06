@@ -24,7 +24,7 @@ GameScene::GameScene()
     message = "GL_INVALID_VALUE = " + a2s<GLfloat>(GL_INVALID_VALUE);
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
 
-    message = "ProgramID = " + a2s<GLint>(GL_INVALID_VALUE);
+    message = "ProgramID = " + a2s<GLuint>(SharedData::getTriangleShader()->getProgramID(0));
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
 }
 

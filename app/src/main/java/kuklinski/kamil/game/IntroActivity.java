@@ -50,15 +50,6 @@ public class IntroActivity extends Activity
 //            Log.e(TAG, e.getMessage());
 //        }
 //        JavaToCppWrapper.loadAssetManager(assetManager);
-
-        // initialize scene cpp
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-//        Log.w(TAG, String.format("heigth intorActivity = %d", height));
-        JavaToCppWrapper.initializeScene(width, height);
     }
 
     @Override protected void onPause()

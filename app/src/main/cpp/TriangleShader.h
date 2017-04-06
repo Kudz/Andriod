@@ -10,7 +10,7 @@
 
 #include "Shaders.h"
 
-#define  LOG_TRIANGLE_SHADER_TAG    "shader"
+#define  LOG_TRIANGLE_SHADER_TAG    "TriangleShader"
 #define  LOG_TRIANGLE_SHADER_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TRIANGLE_SHADER_TAG,__VA_ARGS__)
 
 class TriangleShader
@@ -23,7 +23,6 @@ class TriangleShader
     private:
         GLuint ShaderIds[3];
         void compileProgram(std::string vertexShader, std::string fragmentShader);
-//        GLuint loadShader(GLenum shaderType, const char* pSource);
 };
 
 

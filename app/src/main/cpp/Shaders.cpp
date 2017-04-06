@@ -59,7 +59,7 @@ void DisplayGLError(const char* error_message)
 {
     for (GLint error = glGetError(); error; error = glGetError())
     {
-        LOG_SHADER_I("after %s() glError (0x%x)\n", error_message, error);
+        __android_log_print(ANDROID_LOG_ERROR, LOG_SHADER_TAG, "after %s() glError (%d)\n", error_message, error);
     }
 }
 
@@ -74,4 +74,31 @@ GLuint LoadShader(GLenum shaderType, const char* text)
     }
 
     return shader_id;
+}
+
+GLuint loadShader2(GLenum shaderType, const char* text)
+{
+    GLuint shader = glCreateShader(shaderType);
+    if (shader) {
+        glShaderSource(shader, 1, &text, NULL);
+        glCompileShader(shader);
+        GLint compiled = 0;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+        if (!compiled) {
+            GLint infoLen = 0;
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+            if (infoLen) {
+                char* buf = (char*) malloc(infoLen);
+                if (buf) {
+                    glGetShaderInfoLog(shader, infoLen, NULL, buf);
+                    LOG_SHADER_E("Could not compile shader %d:\n%s\n",
+                         shaderType, buf);
+                    free(buf);
+                }
+                glDeleteShader(shader);
+                shader = 0;
+            }
+        }
+    }
+    return shader;
 }

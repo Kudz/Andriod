@@ -1,6 +1,6 @@
-#version 200
-in vec4 col;
-out vec4 vFragColor;
+precision mediump float;
+varying vec4 col;
 void main(){
-  vFragColor = col;
+  gl_FragColor = col;
 }
+// end of program

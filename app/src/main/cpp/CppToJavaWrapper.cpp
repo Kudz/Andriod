@@ -30,11 +30,20 @@ namespace CppToJava
         // setting scene resolution
         SharedData::setScreenResolution(width, height);
 
+        std::string message = "use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
+        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+        message = "second use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
+        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+
         // making triangle shaders
+        int useCunter = SharedData::getTriangleShader().use_count();
+        std::string vertexShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_v");
         std::string fragmentShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_fragment");
-        std::string vertexShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_vertex");
         std::shared_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader));
         SharedData::setTriangleShader(triangleShader);
+
+//        message = "use count after = " + a2s<int>(SharedData::getTriangleShader().use_count());
+//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
 
         //making Scene
         gameScene = std::shared_ptr<GameScene>(new GameScene);

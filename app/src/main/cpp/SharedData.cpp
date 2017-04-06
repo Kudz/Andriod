@@ -21,7 +21,7 @@ namespace SharedData
 
     void setScreenResolution(int width, int height)
     {
-        LOG_SHARED_DATA_I("initializing width = %l\n", width);
+        LOG_SHARED_DATA_I("initializing width = %d\n", width);
         screenWidth = width;
         screenHeight= height;
     }
@@ -53,19 +53,41 @@ namespace SharedData
             LOG_SHARED_DATA_I("assetManager not founded");
             return std::string();
         }
-        AAsset* assetFile = AAssetManager_open(assetManager, fileName, AASSET_MODE_UNKNOWN);
+        AAsset* assetFile = AAssetManager_open(assetManager, fileName, AASSET_MODE_BUFFER );
         if (assetFile == nullptr) {
             LOG_SHARED_DATA_I("assetFile not founded");
             return std::string();
         }
-        long size = AAsset_getLength(assetFile);
-        char* buffer = (char*) malloc (sizeof(char)*size);
-        AAsset_read (assetFile, buffer, size);
-        AAsset_close(assetFile);
-        std::string result(buffer);
-        free(buffer);
+        //old way
+//        long bufferSize = AAsset_getLength(assetFile);
+//        char* buffer = (char*) malloc (sizeof(char)*bufferSize);
+//        AAsset_read (assetFile, buffer, bufferSize);
 
-        return result;
+        //new way
+        char* assetBuff = (char*) AAsset_getBuffer(assetFile);
+        std::istringstream iss(assetBuff);
+        std:string fromStream = iss.str();
+        iss.clear();
+        assetBuff = nullptr;
+
+        AAsset_close(assetFile);
+
+//        LOG_SHARED_DATA_I("buffer size : %d", bufferSize);
+//        LOG_SHARED_DATA_I("char* : %s", buffer);
+//        LOG_SHARED_DATA_I("char* : %s", buffer);
+//
+//        std::string result(buffer);
+//
+//        LOG_SHARED_DATA_I("string :");
+//        logInfo(LOG_SHARED_DATA_TAG, result.c_str());
+
+        LOG_SHARED_DATA_I("stringStream :");
+        logInfo(LOG_SHARED_DATA_TAG, fromStream.c_str());
+
+//        free(buffer);
+
+//        return result;
+        return fromStream;
     }
 
     void checkGLError(const char* tag, const char* error_message)

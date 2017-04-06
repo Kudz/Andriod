@@ -30,8 +30,13 @@ TriangleDrawing::TriangleDrawing(GLuint programID, std::shared_ptr<TriangleObjec
 }
 void TriangleDrawing::CreateBuffers()
 {
-//  std::cout<<"DrawingBase::CreateBuffers()"<<std::endl;
+    GLint linkStatus = GL_FALSE;
+    glGetProgramiv(this->ProgramID, GL_LINK_STATUS, &linkStatus);
+    std::string message = "Link Status = " + a2s<GLint>(linkStatus);
+    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
+
     ProjectionMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "P"); //move to program
+    SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not get projection uniform location");
     ViewMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "V");
     ModelMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "M");
     ColourVectorUniformLocation = glGetUniformLocation(this->ProgramID, "vertColor");
@@ -78,6 +83,8 @@ void TriangleDrawing::draw(glm::mat4* per, glm::mat4* vis)
 {
 //  std::cout<<"DrawingBase::draw begining"<<std::endl;
 //  std::cout<<"this->ProgramID = "<<this->ProgramID<<std::endl;
+    std::string message = "ProgramID = " + a2s<int>(this->ProgramID);
+    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
     glUseProgram(this->ProgramID);
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not use the shader program");
 

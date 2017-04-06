@@ -6,9 +6,11 @@ package kuklinski.kamil.game;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -293,6 +295,8 @@ public class MyView extends GLSurfaceView
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             SmasherCPP.init(width, height);
+            // initialize scene cpp
+            JavaToCppWrapper.initializeScene(width, height);
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {

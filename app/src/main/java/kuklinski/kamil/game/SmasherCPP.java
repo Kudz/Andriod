@@ -20,8 +20,8 @@ public class SmasherCPP
     public static native void init(int width, int height);
     public static native void step();
     public static native void moveBoard(float x, float y);
-    public static native void assetLoad(AssetManager mgr);
-    public static native void displayString(String mgr);
-    public static native void loadTriangleShader();
+//    public static native void assetLoad(AssetManager mgr);
+//    public static native void displayString(String mgr);
+//    public static native void loadTriangleShader();
 
 }

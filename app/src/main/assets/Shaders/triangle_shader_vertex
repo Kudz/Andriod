@@ -1,11 +1,11 @@
-#version 200
-layout(location=0) in vec4 in_Position;
+attribute vec4 vPosition;
 uniform mat4 P; //projection matrix
 uniform mat4 V; //view matrix
 uniform mat4 M; //model matrix
 uniform vec4 vertColor; //vertices colors
-out vec4 col; //initialized with vertColor then sent though to fragment shader
+varying vec4 col; //initialized with vertColor then sent though to fragment shader
 void main(){
- gl_Position = P * V * M * in_Position;
- col = vertColor;
+    gl_Position = P * V * M * vPosition;
+    col = vertColor;
 }
+// end of program

@@ -134,6 +134,8 @@ bool setupGraphics(int w, int h)
         LOGE("Could not create program.");
         return false;
     }
+    LOGI("gProgram = %d\n",
+         gProgram);
     gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
     checkGlError("glGetAttribLocation");
     LOGI("glGetAttribLocation(\"vPosition\") = %d\n",
@@ -172,6 +174,8 @@ void renderFrame()
     checkGlError("glEnableVertexAttribArray");
     glDrawArrays(GL_TRIANGLES, 0, 6);
     checkGlError("glDrawArrays");
+
+    glUseProgram(0);
 }
 
 //kuklinski.kamil.game  SmasherCPP
@@ -216,22 +220,22 @@ JNIEXPORT void JNICALL
 Java_kuklinski_kamil_game_SmasherCPP_assetLoad(JNIEnv *env, jobject instance, jobject mgr)
 //Java_kuklinski_kamil_game_IntroActivity_assetLoad(JNIEnv *env, jobject instance, jobject mgr)
 {
-    assetManager = AAssetManager_fromJava(env, mgr);
-    AAssetManager *assMgr = AAssetManager_fromJava(env, mgr);
-    AAsset* asset = AAssetManager_open(assMgr, "Shaders/triangle_shader_fragment", AASSET_MODE_UNKNOWN);
-    if (NULL == asset) {
-        LOGI("asset not found");
-    }
-    else
-    {
-        LOGI("asset found");
-    }
-    long size = AAsset_getLength(asset);
-    char* buffer = (char*) malloc (sizeof(char)*size);
-    AAsset_read (asset,buffer,size);
-    LOGI("file = %s\n", buffer);
-    AAsset_close(asset);
-    free(buffer);
+//    assetManager = AAssetManager_fromJava(env, mgr);
+//    AAssetManager *assMgr = AAssetManager_fromJava(env, mgr);
+//    AAsset* asset = AAssetManager_open(assMgr, "Shaders/triangle_shader_fragment", AASSET_MODE_UNKNOWN);
+//    if (NULL == asset) {
+//        LOGI("asset not found");
+//    }
+//    else
+//    {
+//        LOGI("asset found");
+//    }
+//    long size = AAsset_getLength(asset);
+//    char* buffer = (char*) malloc (sizeof(char)*size);
+//    AAsset_read (asset,buffer,size);
+//    LOGI("file = %s\n", buffer);
+//    AAsset_close(asset);
+//    free(buffer);
 }
 
 JNIEXPORT void JNICALL
@@ -263,45 +267,45 @@ Java_kuklinski_kamil_game_SmasherCPP_displayString(JNIEnv *env, jobject instance
 
 JNIEXPORT void JNICALL Java_kuklinski_kamil_game_SmasherCPP_loadTriangleShader(JNIEnv *env, jobject instance)
 {
-    if(assetManager == nullptr)
-    {
-        LOGI("assetManager = nullptr");
-    } else
-    {
-        LOGI("assetManager != nullptr");
-    }
-    AAsset* asset = AAssetManager_open(assetManager, "Shaders/triangle_shader_fragment", AASSET_MODE_UNKNOWN);
-    if (NULL == asset) {
-        LOGI("asset not found");
-    }
-    else
-    {
-        LOGI("asset found");
-    }
-      long size = AAsset_getLength(asset);
-      char* buffer = (char*) malloc (sizeof(char)*size);
-      AAsset_read (asset,buffer,size);
-      LOGI("file = %s\n", buffer);
-      AAsset_close(asset);
-      std::string fragmentShader(buffer);
-      free(buffer);
-
-      asset = AAssetManager_open(assetManager, "Shaders/triangle_shader_vertex", AASSET_MODE_UNKNOWN);
-      if (NULL == asset) {
-          LOGI("asset not found");
-      }
-      else
-      {
-          LOGI("asset found");
-      }
-      size = AAsset_getLength(asset);
-      buffer = (char*) malloc (sizeof(char)*size);
-      AAsset_read (asset,buffer,size);
-      LOGI("file = %s\n", buffer);
-      AAsset_close(asset);
-      std::string vertexShader(buffer);
-      free(buffer);
-
-      TriangleShader triangleShader(vertexShader, fragmentShader);
+//    if(assetManager == nullptr)
+//    {
+//        LOGI("assetManager = nullptr");
+//    } else
+//    {
+//        LOGI("assetManager != nullptr");
+//    }
+//    AAsset* asset = AAssetManager_open(assetManager, "Shaders/triangle_shader_fragment", AASSET_MODE_UNKNOWN);
+//    if (NULL == asset) {
+//        LOGI("asset not found");
+//    }
+//    else
+//    {
+//        LOGI("asset found");
+//    }
+//      long size = AAsset_getLength(asset);
+//      char* buffer = (char*) malloc (sizeof(char)*size);
+//      AAsset_read (asset,buffer,size);
+//      LOGI("file = %s\n", buffer);
+//      AAsset_close(asset);
+//      std::string fragmentShader(buffer);
+//      free(buffer);
+//
+//      asset = AAssetManager_open(assetManager, "Shaders/triangle_shader_vertex", AASSET_MODE_UNKNOWN);
+//      if (NULL == asset) {
+//          LOGI("asset not found");
+//      }
+//      else
+//      {
+//          LOGI("asset found");
+//      }
+//      size = AAsset_getLength(asset);
+//      buffer = (char*) malloc (sizeof(char)*size);
+//      AAsset_read (asset,buffer,size);
+//      LOGI("file = %s\n", buffer);
+//      AAsset_close(asset);
+//      std::string vertexShader(buffer);
+//      free(buffer);
+//
+//      TriangleShader triangleShader(vertexShader, fragmentShader);
 
 }

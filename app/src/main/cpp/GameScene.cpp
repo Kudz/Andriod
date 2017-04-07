@@ -5,21 +5,13 @@
 #include "GameScene.h"
 
 GameScene::GameScene()
-: _board(nullptr), _boardDrawable(nullptr)
 {
     this->createTriangleDrawingObjects();
+    this->createTriangleModelObjects();
 
-    this->_board = std::shared_ptr<Board> (new Board);
     float screenHeight = SharedData::getScreenHeight();
     std::string message = "screen height = " + a2s<float>(screenHeight);
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
-
-//    if(this->_boardDrawable == NULL)
-//    {
-//        SharedData::logInfo(LOG_GAME_SCENE_TAG, "creating boardDrawable");
-//        this->_boardDrawable = std::shared_ptr<TriangleDrawing> (new TriangleDrawing(this->_board));
-//        this->_boardDrawable->setColour(1.0f, 0.0f, 0.5f, 1.0f);
-//    }
 
     message = "GL_INVALID_OPERATION = " + a2s<GLfloat>(GL_INVALID_OPERATION);
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
@@ -27,19 +19,18 @@ GameScene::GameScene()
     message = "GL_INVALID_VALUE = " + a2s<GLfloat>(GL_INVALID_VALUE);
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
 
-    message = "ProgramID = " + a2s<GLuint>(SharedData::getTriangleShader()->getProgramID(0));
+    std::shared_ptr<TriangleShader> traingleShader = SharedData::getTriangleShader();
+    message = "ProgramID = " + a2s<GLuint>(traingleShader->getProgramID());
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
 }
 
 void GameScene::render()
 {
-    _board->setXPosition(36);
     this->clearBackground();
-    glm::mat4 per(1.0f);
-    glm::mat4 vis(1.0f);
-//    SharedData::logInfo(LOG_GAME_SCENE_TAG, glm::to_string(per).c_str());
-//    _boardDrawable->draw();
-    _triangleDrawingObjects.at("Board")->draw();
+    this->updateModels();
+    SharedData::checkGLError(LOG_GAME_SCENE_TAG, "updateModels");
+    this->drawModels();
+    SharedData::checkGLError(LOG_GAME_SCENE_TAG, "drawModels");
 }
 
 void GameScene::clearBackground()
@@ -57,4 +48,30 @@ void GameScene::createTriangleDrawingObjects()
     this->_triangleDrawingObjects.insert({"Board",std::move(boarDescription)});
     //delete this stuff
     _triangleDrawingObjects.at("Board")->setColour(1.0f, 0.0f, 0.5f, 1.0f);
+}
+
+void GameScene::createTriangleModelObjects()
+{
+    std::shared_ptr<Board> boardModel(new Board);
+    boardModel->setColour(0.0f, 0.0f, 1.0f, 1.0f);
+    this->_triangleModelObjects.push_back(std::move(boardModel));
+}
+
+void GameScene::updateModels()
+{
+//    SharedData::logInfo(LOG_GAME_SCENE_TAG, "updateModels");
+    for(std::shared_ptr<TriangleModelInterface> triangleModelObject: this->_triangleModelObjects)
+    {
+        triangleModelObject->update();
+    }
+}
+
+void GameScene::drawModels()
+{
+//    SharedData::logInfo(LOG_GAME_SCENE_TAG, "drawModels");
+    for(std::shared_ptr<TriangleModelInterface> triangleModelObject: this->_triangleModelObjects)
+    {
+        std::string triangleDrawingName = triangleModelObject->getTriangleDrawingName();
+        this->_triangleDrawingObjects.at(triangleDrawingName)->draw(triangleModelObject);
+    }
 }

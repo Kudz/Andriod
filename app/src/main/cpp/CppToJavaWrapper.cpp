@@ -66,11 +66,18 @@ namespace CppToJava
         SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, "end of initialization");
     }
 
-    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchMovement(JNIEnv * env, jobject obj,  jfloat xDifference, jfloat yDifference)
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchMovement(JNIEnv * env, jobject obj, jboolean isMoving, jfloat xPosition, jfloat yPosition)
     {
-        float xChange = xDifference/SharedData::getScreenWidth();
-        float yChange = yDifference/SharedData::getScreenHeight();
-        SharedData::setTouchMovement(xChange, yChange);
+//        std::string message = "xDifference = " + a2s<float>(xPosition);
+//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+//        message = "ScreenWidth = " + a2s<float>((float)SharedData::getScreenWidth());
+//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+//        float xChange = xDifference*2/(float)SharedData::getScreenWidth();
+//        float yChange = yDifference*2/(float)SharedData::getScreenHeight();
+//        message = "xChange = " + a2s<float>(xChange);
+//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+//        SharedData::setTouchMovement(isMoving, xChange, yChange);
+        SharedData::setTouchMovement(isMoving, xPosition, yPosition);
     }
 
     JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeMatrices(JNIEnv *env, jobject instance)

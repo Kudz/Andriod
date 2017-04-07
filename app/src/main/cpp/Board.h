@@ -10,26 +10,36 @@
 #include <GLES2/gl2.h>
 
 #include "SharedData.h"
-#include "TriangleDescriptionInterface.h"
+#include "TriangleModelInterface.h"
 
 #define  LOG_BOARD_TAG    "Board"
 #define  LOG_BOARD_SHADER_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_BOARD_TAG,__VA_ARGS__)
 
-class Board: public TriangleDescriptionInterface
+class Board: public TriangleModelInterface
 {
 public:
     Board();
     void setXPosition(int xPosition);
-    std::vector<double> getDrawingPoints(); //return drawing points for OpenGL
+    glm::vec4 getColourVector();
+    void setColour(float red, float green, float blue, float alpha);
+    glm::mat4 getModelMatrix();
+    std::string getTriangleDrawingName();
+    void update();
 private:
-    float _homePosition[2]; // 0 - x position, 1 y - position
     float _boardWidth;
     float _boardHeight;
-    float _actualPosition[2];
     int _screenWidth;
     int _screenHeight;
-    GLuint _programID;
-    std::vector<double> _vertexes;
+    float _xMax;
+    float _xMin;
+    float _yposition;
+
+    //touching values
+    bool _isMoving;
+    float _savedXPositionNorm;
+    float _savedYPositionNorm;
+    glm::mat4 _savedModelMatrix;
+    float normalizePosition(float screenPosition);
 };
 
 

@@ -51,9 +51,11 @@ namespace SharedData
     std::shared_ptr<TriangleShader> getTriangleShader();
     int getScreenWidth();
     int getScreenHeight();
-    void setTouchMovement(float dx, float dy);
-    int getXTouchMovement();
-    int getYTouchMovement();
+    void setTouchMovement(bool isMovingData, float xMovementData, float yMovementData);
+    void setTouchMovementData(float xMovementData, float yMovementData);
+    float getXTouchPosition();
+    float getYTouchPosition();
+    bool getMovementStatus();
     void setProjectionMatrix(glm::mat4 projectionMatrixData);
     void setViewMatrix(glm::mat4 viewMatrixData);
     glm::mat4 getProjectionMatrix();

@@ -15,6 +15,7 @@
 
 #include "SharedData.h"
 #include "TriangleDescriptionInterface.h"
+#include "TriangleModelInterface.h"
 
 #define  LOG_TRIANGLE_DRAWING_TAG    "TriangleDrawing"
 
@@ -26,6 +27,7 @@ public:
     ~TriangleDrawing();
     void setColour(float red, float green, float blue, float alpha);
     void draw();
+    void draw(std::shared_ptr<TriangleModelInterface> triangleModelObject);
     //~ void updateVertices(GLfloat* vertices); //depreciated
 private:
     //drawing stuff

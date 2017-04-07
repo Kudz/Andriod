@@ -5,48 +5,105 @@
 #include "Board.h"
 
 Board::Board()
-: _boardWidth(0.4f), _boardHeight(0.04f)
+: _isMoving(false)
 {
+    //do I need that?
     this->_screenHeight = SharedData::getScreenHeight();
     LOG_BOARD_SHADER_I("screen height = %d", this->_screenHeight);
-    double xOffset = 0.2;
-    double yOffset = 0.02;
-    double zOffset = 0.0;
 
-    std::vector<double> vertices;
+    this->_boardWidth = 0.4f;
+    this->_boardHeight = 0.04f;
+    this->_modelMatrix = glm::mat4(1.0f);
+    this->_triangleDrawingName = std::string("Board");
+    this->_xMax = 1.0f -0.02f - this->_boardWidth/2;
+    this->_xMin = -1.0f + 0.02f + this->_boardWidth/2;
+    this->_yposition = -1.0f + _boardHeight/2 + 0.1f;
+    this->_modelMatrix[3][1] = this->_yposition;
+}
 
-    vertices.push_back(-xOffset);
-    vertices.push_back(yOffset);
-    vertices.push_back(zOffset);
+glm::vec4 Board::getColourVector()
+{
+    return this->_colour;
+}
 
-    vertices.push_back(-xOffset);
-    vertices.push_back(-yOffset);
-    vertices.push_back(zOffset);
+void Board::setColour(float red, float green, float blue, float alpha)
+{
+    this->_colour[0] = red;
+    this->_colour[1] = green;
+    this->_colour[2] = blue;
+    this->_colour[3] = alpha;
+}
+glm::mat4 Board::getModelMatrix()
+{
+    return this->_modelMatrix;
+}
 
-    vertices.push_back(xOffset);
-    vertices.push_back(yOffset);
-    vertices.push_back(zOffset);
-
-    vertices.push_back(xOffset);
-    vertices.push_back(-yOffset);
-    vertices.push_back(zOffset);
-
-    vertices.push_back(-xOffset);
-    vertices.push_back(-yOffset);
-    vertices.push_back(zOffset);
-
-    vertices.push_back(xOffset);
-    vertices.push_back(yOffset);
-    vertices.push_back(zOffset);
-
-    this->_vertexes = vertices;
+std::string Board::getTriangleDrawingName()
+{
+    return this->_triangleDrawingName;
 }
 
 void Board::setXPosition(int xPosition)
 {
 }
 
-std::vector<double> Board::getDrawingPoints()
+float Board::normalizePosition(float screenPosition)
 {
-    return this->_vertexes;
+    float result;
+    float screenWidth = SharedData::getScreenWidth();
+    result = (2.0f * screenPosition)/(float)screenWidth -1.0f;
+    return result;
+}
+
+void Board::update()
+{
+    bool isTouching = SharedData::getMovementStatus();
+
+//    std::string message = "isTouching = " + a2s<bool>(isTouching);
+//    SharedData::logInfo(LOG_BOARD_TAG, message.c_str());
+
+//    message = "this->_isMoving = " + a2s<bool>(this->_isMoving);
+//    SharedData::logInfo(LOG_BOARD_TAG, message.c_str());
+
+//    message = "this->_savedXPositionNorm = " + a2s<bool>(this->_savedXPositionNorm);
+//    SharedData::logInfo(LOG_BOARD_TAG, message.c_str());
+
+    if(this->_isMoving)
+    {
+        if(isTouching)
+        {
+            float actualXPosition = SharedData::getXTouchPosition();
+            float actualXPositionNorm = this->normalizePosition(actualXPosition);
+            float xDifference = this->_savedXPositionNorm - actualXPositionNorm;
+
+            float newXTranslationValue = this->_savedModelMatrix[3][0] - xDifference;
+            if (newXTranslationValue < this->_xMin)
+            {
+                newXTranslationValue = this->_xMin;
+            }
+            else
+            {
+                if (newXTranslationValue > this->_xMax)
+                {
+                    newXTranslationValue = this->_xMax;
+                }
+            }
+            this->_modelMatrix[3][0] = newXTranslationValue;
+        }
+        else
+        {
+            this->_isMoving =false;
+        }
+    }
+    else
+    {
+        if(isTouching)
+        {
+            float actualXPosition = SharedData::getXTouchPosition();
+            float actualXPositionNorm = this->normalizePosition(actualXPosition);
+            this->_savedXPositionNorm = actualXPositionNorm;
+            this->_savedModelMatrix = this->_modelMatrix;
+            this->_isMoving = true;
+        }
+    }
 }

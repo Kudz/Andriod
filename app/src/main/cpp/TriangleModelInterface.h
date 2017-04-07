@@ -11,9 +11,15 @@
 #include "glm/ext.hpp" //to_string
 
 class TriangleModelInterface {
+public:
     virtual glm::vec4 getColourVector() = 0; //return colourVector
-    virtual glm::vec4 getModelMatrix() = 0;
+    virtual glm::mat4 getModelMatrix() = 0;
     virtual std::string getTriangleDrawingName() = 0;
+    virtual void update() = 0;
+protected:
+    glm::mat4 _modelMatrix; //home position is at identity matrix
+    glm::vec4 _colour;
+    std::string _triangleDrawingName;
 };
 
 

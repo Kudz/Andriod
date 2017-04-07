@@ -20,21 +20,24 @@
 #define  LOG_GAME_SCENE_TAG    "GameScene"
 
 typedef std::unordered_map<std::string, std::shared_ptr<TriangleDrawing> > TriangleDrawingObjects;
+typedef std::vector<std::shared_ptr<TriangleModelInterface> > TriangleModelObjects;
 
 class GameScene
 {
 public:
     GameScene();
-//    ~GameScene();
     void render();
 private:
     void clearBackground();
     void createTriangleDrawingObjects();
-    std::shared_ptr<Board> _board;
-    std::shared_ptr<TriangleDrawing> _boardDrawable;
+    void createTriangleModelObjects();
+    void updateModels();
+    void drawModels();
 
     //TriangleDescriptionObjects
     TriangleDrawingObjects _triangleDrawingObjects;
+
+    TriangleModelObjects _triangleModelObjects;
 };
 
 

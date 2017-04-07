@@ -19,5 +19,5 @@ public class JavaToCppWrapper
     public static native void makeStep();
     public static native void initializeShader();
     public static native void initializeMatrices();
-    public static native void setTouchMovement(float xDifference, float yDifference);
+    public static native void setTouchMovement(boolean isMoving, float xPosition, float yPosition);
 }

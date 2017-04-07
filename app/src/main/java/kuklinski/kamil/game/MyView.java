@@ -319,17 +319,21 @@ public class MyView extends GLSurfaceView
         float x = e.getX();
         float y = e.getY();
 
+        boolean isMoving = false;
+//        float dx = x - mPreviousX;
+//        float dy = y - mPreviousY;
+
         switch (e.getAction()) {
             case MotionEvent.ACTION_MOVE:
-
-                float dx = x - mPreviousX;
-                float dy = y - mPreviousY;
-                JavaToCppWrapper.setTouchMovement(dx, dy);
-//                SmasherCPP.moveBoard(dx, dy);
+                isMoving = true;
         }
+
+        JavaToCppWrapper.setTouchMovement(isMoving, x, y);
 
         mPreviousX = x;
         mPreviousY = y;
+
+//        Log.w(TAG, String.format("x position = %s\n", x));
 
         return true;
     }

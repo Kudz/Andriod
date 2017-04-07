@@ -11,6 +11,7 @@ namespace SharedData
         AAssetManager* assetManager;
         int screenWidth = 0;
         int screenHeight = 0;
+        bool isMoving = false;
         float xMovement = 0.0f;
         float yMovement = 0.0f;
         std::shared_ptr<TriangleShader> triangleShader;
@@ -42,19 +43,34 @@ namespace SharedData
         return triangleShader;
     }
 
-    void setTouchMovement(float dx, float dy)
+    void setTouchMovementData(float xMovementData, float yMovementData)
     {
-        xMovement = dx;
-        yMovement = dy;
+//        LOG_SHARED_DATA_I("setTouchMovement dx = %f", xMovementData);
+        xMovement = xMovementData;
+        yMovement = yMovementData;
     }
 
-    int getXTouchMovement()
+    void setTouchMovement(bool isMovingData, float xMovementData, float yMovementData)
+    {
+//        LOG_SHARED_DATA_I("setTouchMovement xMovementData = %f", xMovementData);
+        isMoving = isMovingData;
+        xMovement = xMovementData;
+        yMovement = yMovementData;
+    }
+
+    float getXTouchPosition()
     {
         return xMovement;
     }
-    int getYTouchMovement()
+
+    float getYTouchPosition()
     {
         return yMovement;
+    }
+
+    bool getMovementStatus()
+    {
+        return isMoving;
     }
 
     void setProjectionMatrix(glm::mat4 projectionMatrixData)
@@ -99,12 +115,7 @@ namespace SharedData
             LOG_SHARED_DATA_I("assetFile not founded");
             return std::string();
         }
-        //old way
-//        long bufferSize = AAsset_getLength(assetFile);
-//        char* buffer = (char*) malloc (sizeof(char)*bufferSize);
-//        AAsset_read (assetFile, buffer, bufferSize);
 
-        //new way
         char* assetBuff = (char*) AAsset_getBuffer(assetFile);
         std::istringstream iss(assetBuff);
         std:string fromStream = iss.str();
@@ -113,21 +124,9 @@ namespace SharedData
 
         AAsset_close(assetFile);
 
-//        LOG_SHARED_DATA_I("buffer size : %d", bufferSize);
-//        LOG_SHARED_DATA_I("char* : %s", buffer);
-//        LOG_SHARED_DATA_I("char* : %s", buffer);
-//
-//        std::string result(buffer);
-//
-//        LOG_SHARED_DATA_I("string :");
-//        logInfo(LOG_SHARED_DATA_TAG, result.c_str());
-
         LOG_SHARED_DATA_I("stringStream :");
         logInfo(LOG_SHARED_DATA_TAG, fromStream.c_str());
 
-//        free(buffer);
-
-//        return result;
         return fromStream;
     }
 

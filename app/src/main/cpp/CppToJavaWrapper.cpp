@@ -65,4 +65,17 @@ namespace CppToJava
 
         SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, "end of initialization");
     }
+
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchMovement(JNIEnv * env, jobject obj,  jfloat xDifference, jfloat yDifference)
+    {
+        float xChange = xDifference/SharedData::getScreenWidth();
+        float yChange = yDifference/SharedData::getScreenHeight();
+        SharedData::setTouchMovement(xChange, yChange);
+    }
+
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeMatrices(JNIEnv *env, jobject instance)
+    {
+        SharedData::setProjectionMatrix(glm::mat4(1.0f));
+        SharedData::setViewMatrix(glm::mat4(1.0f));
+    }
 }

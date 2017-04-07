@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-class TriangleObjectInterface
+class TriangleDescriptionInterface
 {
 public:
     virtual std::vector<double> getDrawingPoints() = 0; //return drawing points for OpenGL

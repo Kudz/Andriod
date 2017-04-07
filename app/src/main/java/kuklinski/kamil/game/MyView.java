@@ -290,11 +290,9 @@ public class MyView extends GLSurfaceView
         public void onDrawFrame(GL10 gl)
         {
             JavaToCppWrapper.makeStep();
-            SmasherCPP.step();
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            SmasherCPP.init(width, height);
 //             initialize scene cpp
             JavaToCppWrapper.initializeScene(width, height);
         }
@@ -302,6 +300,7 @@ public class MyView extends GLSurfaceView
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             Log.w(TAG, "onSurfaceCreated");
             JavaToCppWrapper.initializeShader();
+            JavaToCppWrapper.initializeMatrices();
         }
 
     }
@@ -325,7 +324,8 @@ public class MyView extends GLSurfaceView
 
                 float dx = x - mPreviousX;
                 float dy = y - mPreviousY;
-                SmasherCPP.moveBoard(dx, dy);
+                JavaToCppWrapper.setTouchMovement(dx, dy);
+//                SmasherCPP.moveBoard(dx, dy);
         }
 
         mPreviousX = x;

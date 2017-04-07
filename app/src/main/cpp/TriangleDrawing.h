@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "SharedData.h"
-#include "TriangleObjectInterface.h"
+#include "TriangleDescriptionInterface.h"
 
 #define  LOG_TRIANGLE_DRAWING_TAG    "TriangleDrawing"
 
@@ -22,29 +22,18 @@ class TriangleDrawing
 {
 public:
     TriangleDrawing();
-    TriangleDrawing(GLuint programID, std::shared_ptr<TriangleObjectInterface> drawingObject, int frequency = 0, int mode = 0);
+    TriangleDrawing(TriangleDescriptionInterface& triangleDescriptionObject);
     ~TriangleDrawing();
-    TriangleDrawing( const TriangleDrawing &obj); //copy constructor
     void setColour(float red, float green, float blue, float alpha);
-    void draw(glm::mat4* per, glm::mat4* vis);
+    void draw();
     //~ void updateVertices(GLfloat* vertices); //depreciated
-    void updateVertices();
 private:
     //drawing stuff
     GLfloat* Vertices;
-    std::shared_ptr<TriangleObjectInterface> _drawingObject;
-    GLuint ProjectionMatrixUniformLocation;
-    GLuint ViewMatrixUniformLocation;
-    GLuint ModelMatrixUniformLocation;
-    GLuint ColourVectorUniformLocation;
-    GLuint _vertexPositionAttributeLocation;
     GLuint _buffer;
     int VertexNumber;
-    GLuint ProgramID;
     glm::mat4 _glmM; // drawing purpose
     glm::vec4 ColourVector;
-    int BuffersFrequency; // 0 - Static, 1 - Dynamic, 2 - Stream
-    int _drawingMode; // 0 - GL_LINES, 1 - GL_POINTS; not used yet
     void CreateBuffers();
 };
 

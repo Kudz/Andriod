@@ -16,13 +16,29 @@
 class TriangleShader
 {
     public:
-        TriangleShader();
+//        TriangleShader();
         TriangleShader(std::string vertexShader, std::string fragmentShader);
         ~TriangleShader();
         GLuint getProgramID(int part);
+        GLuint getProgramID();
+        GLuint getProjectionMatrixUniformLocation();
+        GLuint getViewMatrixUniformLocation();
+        GLuint getModelMatrixUniformLocation();
+        GLuint getColourVectorUniformLocation();
+        GLuint getVertexPositionAttributeLocation();
     private:
+        GLuint _programID;
+        GLuint _vertexShader;
+        GLuint _fragmentShader;
         GLuint ShaderIds[3];
         void compileProgram(std::string vertexShader, std::string fragmentShader);
+
+        GLuint _projectionMatrixUniformLocation;
+        GLuint _viewMatrixUniformLocation;
+        GLuint _modelMatrixUniformLocation;
+        GLuint _colourVectorUniformLocation;
+        GLuint _vertexPositionAttributeLocation;
+        void setShaderParameters();
 };
 
 namespace TriangleShaderNamespace

@@ -10,12 +10,12 @@
 #include <GLES2/gl2.h>
 
 #include "SharedData.h"
-#include "TriangleObjectInterface.h"
+#include "TriangleDescriptionInterface.h"
 
 #define  LOG_BOARD_TAG    "Board"
 #define  LOG_BOARD_SHADER_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_BOARD_TAG,__VA_ARGS__)
 
-class Board: public TriangleObjectInterface
+class Board: public TriangleDescriptionInterface
 {
 public:
     Board();

@@ -9,10 +9,13 @@ namespace SharedData
     namespace
     {
         AAssetManager* assetManager;
-        int screenWidth;
-        int screenHeight;
-//        std::unique_ptr<TriangleShader> triangleShader;
+        int screenWidth = 0;
+        int screenHeight = 0;
+        float xMovement = 0.0f;
+        float yMovement = 0.0f;
         std::shared_ptr<TriangleShader> triangleShader;
+        glm::mat4 projectionMatrix;
+        glm::mat4 viewMatrix;
     }
 
     void setAAssetManager(AAssetManager* assetManagerData)
@@ -39,18 +42,40 @@ namespace SharedData
         return triangleShader;
     }
 
-//    void setTriangleShader(std::unique_ptr<TriangleShader> triangleShaderData)
-//    {
-//        LOG_SHARED_DATA_I("setTriangleShader beginning");
-//        triangleShader = std::move(triangleShaderData);
-////        triangleShader = triangleShaderData;
-//        LOG_SHARED_DATA_I("setTriangleShader ending");
-//    }
-//
-//    std::unique_ptr<TriangleShader> getTriangleShader()
-//    {
-//        return triangleShader;
-//    }
+    void setTouchMovement(float dx, float dy)
+    {
+        xMovement = dx;
+        yMovement = dy;
+    }
+
+    int getXTouchMovement()
+    {
+        return xMovement;
+    }
+    int getYTouchMovement()
+    {
+        return yMovement;
+    }
+
+    void setProjectionMatrix(glm::mat4 projectionMatrixData)
+    {
+        projectionMatrix = projectionMatrixData;
+    }
+
+    void setViewMatrix(glm::mat4 viewMatrixData)
+    {
+        viewMatrix = viewMatrixData;
+    }
+
+    glm::mat4 getProjectionMatrix()
+    {
+        return projectionMatrix;
+    }
+
+    glm::mat4 getViewMatrix()
+    {
+        return viewMatrix;
+    }
 
     int getScreenWidth()
     {

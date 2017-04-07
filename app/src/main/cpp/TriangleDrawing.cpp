@@ -8,17 +8,13 @@ TriangleDrawing::TriangleDrawing()
 {
     SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, "TriangleDrawing() won't work, there is a lot of things to activate");
 }
-//numberOfVertices - amount of vertex
-TriangleDrawing::TriangleDrawing(GLuint programID, std::shared_ptr<TriangleObjectInterface> drawingObject, int frequency, int mode)
+
+TriangleDrawing::TriangleDrawing(TriangleDescriptionInterface& triangleDescriptionObject)
 {
-//  std::cout<<"number of vertices = "<<numberOfVertices<<std::endl;
-    this->ProgramID = programID;
-    this->_drawingObject = drawingObject;
-    std::vector<double> vertices = this->_drawingObject->getDrawingPoints();
+//    this->_drawingObject = drawingObject;
+    std::vector<double> vertices = triangleDescriptionObject.getDrawingPoints();
     this->VertexNumber = vertices.size()/3;
     this->Vertices = new GLfloat[this->VertexNumber*3];
-    this->BuffersFrequency = frequency;
-    this->_drawingMode = mode;
     for(int i = 0; i < this->VertexNumber*3; i++)
     {
         this->Vertices[i] = vertices.at(i);
@@ -28,36 +24,20 @@ TriangleDrawing::TriangleDrawing(GLuint programID, std::shared_ptr<TriangleObjec
     this->CreateBuffers();
 //  std::cout<<"end of DrawingBase::DrawingBase"<<std::endl;
 }
+
 void TriangleDrawing::CreateBuffers()
 {
     GLint linkStatus = GL_FALSE;
-    glGetProgramiv(this->ProgramID, GL_LINK_STATUS, &linkStatus);
+    glGetProgramiv(SharedData::getTriangleShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
     std::string message = "Link Status = " + a2s<GLint>(linkStatus);
     SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
 
-    ProjectionMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "P"); //move to program
-    SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not get projection uniform location");
-    ViewMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "V");
-    ModelMatrixUniformLocation = glGetUniformLocation(this->ProgramID, "M");
-    ColourVectorUniformLocation = glGetUniformLocation(this->ProgramID, "vertColor");
-    SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not get the shader uniform locations");
-    _vertexPositionAttributeLocation = glGetAttribLocation(this->ProgramID, "vPosition");
-    SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not get the shader attribute locations");
     glGenBuffers(1, &this->_buffer);
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not generate the buffer objects");
     glBindBuffer(GL_ARRAY_BUFFER, this->_buffer); ///GL_ARRAY_BUFFER, which signifies that the data provided contains vertex attributes
 
-    switch(this->BuffersFrequency)
-    {
-        case 1:
-            glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*this->VertexNumber*3, this->Vertices, GL_DYNAMIC_DRAW);
-            break;
-        case 2:
-            glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*this->VertexNumber*3, this->Vertices, GL_STREAM_DRAW);
-            break;
-        default:
-            glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*this->VertexNumber*3, this->Vertices, GL_STATIC_DRAW);
-    }
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*this->VertexNumber*3, this->Vertices, GL_STATIC_DRAW);
+
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not bind the VAO (Vertex Array Onject) to the VBO (Vertex Buffer Object)");
     glBindBuffer(GL_ARRAY_BUFFER, 0); //unload buffer
 }
@@ -81,48 +61,33 @@ void TriangleDrawing::setColour(float red, float green, float blue, float alpha)
     this->ColourVector[3] = alpha;
 }
 
-void TriangleDrawing::draw(glm::mat4* per, glm::mat4* vis)
+void TriangleDrawing::draw()
 {
 //    std::string message = "ProgramID = " + a2s<int>(this->ProgramID);
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
-    glUseProgram(this->ProgramID);
+    glUseProgram(SharedData::getTriangleShader()->getProgramID());
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not use the shader program");
 
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, glm::to_string(*per).c_str());
-    glUniformMatrix4fv(this->ProjectionMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(*per));
+    glUniformMatrix4fv(SharedData::getTriangleShader()->getProjectionMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(SharedData::getProjectionMatrix()));
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not set the projection uniform matrix");
 
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, glm::to_string(*vis).c_str());
-    glUniformMatrix4fv(this->ViewMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(*vis));
+    glUniformMatrix4fv(SharedData::getTriangleShader()->getViewMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(SharedData::getViewMatrix()));
 
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, glm::to_string(this->_glmM).c_str());
-    glUniformMatrix4fv(this->ModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(this->_glmM));
+    glUniformMatrix4fv(SharedData::getTriangleShader()->getModelMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(this->_glmM));
 
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, glm::to_string(this->ColourVector).c_str());
-    glUniform4fv(this->ColourVectorUniformLocation, 1, glm::value_ptr(this->ColourVector));
+    glUniform4fv(SharedData::getTriangleShader()->getColourVectorUniformLocation(), 1, glm::value_ptr(this->ColourVector));
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not set the shader uniforms");
 
     glBindBuffer(GL_ARRAY_BUFFER, this->_buffer);
 
-    if(this->BuffersFrequency > 0)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, this->_buffer);
-        glBufferSubData(GL_ARRAY_BUFFER,  0,  sizeof(GLfloat)*this->VertexNumber*3,  this->Vertices);
-    }
-
-    glVertexAttribPointer(_vertexPositionAttributeLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(_vertexPositionAttributeLocation);
+    glVertexAttribPointer(SharedData::getTriangleShader()->getVertexPositionAttributeLocation(), 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(SharedData::getTriangleShader()->getVertexPositionAttributeLocation());
     glDrawArrays(GL_TRIANGLES, 0, this->VertexNumber);
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR:  Could not draw object");
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glUseProgram(0);
-}
-
-void TriangleDrawing::updateVertices()
-{
-    std::vector<double> vertices = this->_drawingObject->getDrawingPoints();
-    for(int i = 0; i < this->VertexNumber*3; i++)
-    {
-        this->Vertices[i] = vertices.at(i);
-    }
 }

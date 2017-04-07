@@ -7,10 +7,6 @@ add_definitions(-DSOURCEFOLDERPATH="${CMAKE_CURRENT_SOURCE_DIR}")
 set(ALL_INCLUDE_DIRS SharedData.h)
 include_directories(${ALL_INCLUDE_DIRS})
 
-add_library(smasher SHARED smasher.cpp Shaders.cpp TriangleShader.cpp)
-
-target_link_libraries(smasher android log EGL GLESv2)
-
 add_library(cppToJava SHARED
     CppToJavaWrapper.cpp
     GameScene.cpp
@@ -18,7 +14,9 @@ add_library(cppToJava SHARED
     Shaders.cpp
     TriangleShader.cpp
     SharedData.cpp
-    TriangleObjectInterface.cpp
+    TriangleDescriptionInterface.cpp
+    TriangleModelInterface.cpp
     TriangleDrawing.cpp
+    BoardDescription.cpp
     )
 target_link_libraries(cppToJava android log EGL GLESv2)

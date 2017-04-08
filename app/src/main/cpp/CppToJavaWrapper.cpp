@@ -58,7 +58,7 @@ namespace CppToJava
             SharedData::setTriangleShader(nullptr);
         }
         std::string vertexShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_v");
-        std::string fragmentShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_fragment");
+        std::string fragmentShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_f");
 //        std::unique_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader));
         std::shared_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader), TriangleShaderNamespace::freeBuffers);
         SharedData::setTriangleShader(triangleShader);

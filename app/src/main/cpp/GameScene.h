@@ -12,15 +12,18 @@
 #include "glm/gtc/type_ptr.hpp" // value_ptr
 #include "glm/ext.hpp" //to_string
 
+#include "LineDrawing.h"
 #include "TriangleDrawing.h"
 #include "Board.h"
 #include "BoardDescription.h"
+#include "Boundary.h"
+#include "BoundaryDescription.h"
 #include "SharedData.h"
 
 #define  LOG_GAME_SCENE_TAG    "GameScene"
 
 typedef std::unordered_map<std::string, std::shared_ptr<TriangleDrawing> > TriangleDrawingObjects;
-typedef std::vector<std::shared_ptr<TriangleModelInterface> > TriangleModelObjects;
+typedef std::vector<std::shared_ptr<ModelInterface> > TriangleModelObjects;
 
 class GameScene
 {
@@ -36,8 +39,10 @@ private:
 
     //TriangleDescriptionObjects
     TriangleDrawingObjects _triangleDrawingObjects;
-
     TriangleModelObjects _triangleModelObjects;
+
+    std::shared_ptr<LineDrawing> _boundaryDrawingObject;
+    std::shared_ptr<ModelInterface> _boundaryModelObject;
 };
 
 

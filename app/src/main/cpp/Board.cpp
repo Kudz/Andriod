@@ -26,7 +26,7 @@ glm::vec4 Board::getColourVector()
     return this->_colour;
 }
 
-void Board::setColour(float red, float green, float blue, float alpha)
+void Board::setColourVector(float red, float green, float blue, float alpha)
 {
     this->_colour[0] = red;
     this->_colour[1] = green;
@@ -38,7 +38,7 @@ glm::mat4 Board::getModelMatrix()
     return this->_modelMatrix;
 }
 
-std::string Board::getTriangleDrawingName()
+std::string Board::getDrawingName()
 {
     return this->_triangleDrawingName;
 }

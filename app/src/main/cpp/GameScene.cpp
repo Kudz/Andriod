@@ -6,8 +6,19 @@
 
 GameScene::GameScene()
 {
+    //increasing the line size
+    glLineWidth(3.0f);
+
     this->createTriangleDrawingObjects();
     this->createTriangleModelObjects();
+
+    //boundary
+    BoundaryDescription boundaryDescription;
+    std::shared_ptr<LineDrawing> boundaryDrawing(new LineDrawing(boundaryDescription));
+    this->_boundaryDrawingObject = std::move(boundaryDrawing);
+
+    this->_boundaryModelObject = std::shared_ptr<Boundary>(new Boundary);
+    this->_boundaryModelObject->setColourVector(0.0f, 0.0f, 1.0f, 1.0f);
 
     float screenHeight = SharedData::getScreenHeight();
     std::string message = "screen height = " + a2s<float>(screenHeight);
@@ -27,6 +38,7 @@ GameScene::GameScene()
 void GameScene::render()
 {
     this->clearBackground();
+    this->_boundaryDrawingObject->draw(this->_boundaryModelObject);
     this->updateModels();
     SharedData::checkGLError(LOG_GAME_SCENE_TAG, "updateModels");
     this->drawModels();
@@ -44,8 +56,8 @@ void GameScene::clearBackground()
 void GameScene::createTriangleDrawingObjects()
 {
     BoardDescription boardDescription;
-    std::shared_ptr<TriangleDrawing> boarDescription(new TriangleDrawing(boardDescription));
-    this->_triangleDrawingObjects.insert({"Board",std::move(boarDescription)});
+    std::shared_ptr<TriangleDrawing> boardDrawing(new TriangleDrawing(boardDescription));
+    this->_triangleDrawingObjects.insert({"Board",std::move(boardDrawing)});
     //delete this stuff
     _triangleDrawingObjects.at("Board")->setColour(1.0f, 0.0f, 0.5f, 1.0f);
 }
@@ -53,14 +65,14 @@ void GameScene::createTriangleDrawingObjects()
 void GameScene::createTriangleModelObjects()
 {
     std::shared_ptr<Board> boardModel(new Board);
-    boardModel->setColour(0.0f, 0.0f, 1.0f, 1.0f);
+    boardModel->setColourVector(0.0f, 0.0f, 1.0f, 1.0f);
     this->_triangleModelObjects.push_back(std::move(boardModel));
 }
 
 void GameScene::updateModels()
 {
 //    SharedData::logInfo(LOG_GAME_SCENE_TAG, "updateModels");
-    for(std::shared_ptr<TriangleModelInterface> triangleModelObject: this->_triangleModelObjects)
+    for(std::shared_ptr<ModelInterface> triangleModelObject: this->_triangleModelObjects)
     {
         triangleModelObject->update();
     }
@@ -69,9 +81,9 @@ void GameScene::updateModels()
 void GameScene::drawModels()
 {
 //    SharedData::logInfo(LOG_GAME_SCENE_TAG, "drawModels");
-    for(std::shared_ptr<TriangleModelInterface> triangleModelObject: this->_triangleModelObjects)
+    for(std::shared_ptr<ModelInterface> triangleModelObject: this->_triangleModelObjects)
     {
-        std::string triangleDrawingName = triangleModelObject->getTriangleDrawingName();
+        std::string triangleDrawingName = triangleModelObject->getDrawingName();
         this->_triangleDrawingObjects.at(triangleDrawingName)->draw(triangleModelObject);
     }
 }

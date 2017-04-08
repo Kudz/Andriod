@@ -15,6 +15,7 @@ namespace SharedData
         float xMovement = 0.0f;
         float yMovement = 0.0f;
         std::shared_ptr<TriangleShader> triangleShader;
+        std::shared_ptr<LineShader> lineShader;
         glm::mat4 projectionMatrix;
         glm::mat4 viewMatrix;
     }
@@ -41,6 +42,16 @@ namespace SharedData
     std::shared_ptr<TriangleShader> getTriangleShader()
     {
         return triangleShader;
+    }
+
+    void setLineShader(std::shared_ptr<LineShader> lineShaderData)
+    {
+        lineShader = std::move(lineShaderData);
+    }
+
+    std::shared_ptr<LineShader> getLineShader()
+    {
+        return lineShader;
     }
 
     void setTouchMovementData(float xMovementData, float yMovementData)

@@ -17,6 +17,7 @@
 #include <android/asset_manager.h>
 
 #include "TriangleShader.h"
+#include "LineShader.h"
 
 #define  LOG_SHARED_DATA_TAG    "SharedData"
 #define  LOG_SHARED_DATA_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_SHARED_DATA_TAG,__VA_ARGS__)
@@ -49,6 +50,8 @@ namespace SharedData
     void setScreenResolution(int width, int height);
     void setTriangleShader(std::shared_ptr<TriangleShader> triangleShaderData);
     std::shared_ptr<TriangleShader> getTriangleShader();
+    void setLineShader(std::shared_ptr<LineShader> lineShaderData);
+    std::shared_ptr<LineShader> getLineShader();
     int getScreenWidth();
     int getScreenHeight();
     void setTouchMovement(bool isMovingData, float xMovementData, float yMovementData);

@@ -13,10 +13,14 @@ add_library(cppToJava SHARED
     Board.cpp
     Shaders.cpp
     TriangleShader.cpp
+    LineShader.cpp
     SharedData.cpp
-    TriangleDescriptionInterface.cpp
-    TriangleModelInterface.cpp
+    ModelDescriptionInterface.cpp
+    ModelInterface.cpp
     TriangleDrawing.cpp
+    LineDrawing.cpp
     BoardDescription.cpp
+    Boundary.cpp
+    BoundaryDescription.cpp
     )
 target_link_libraries(cppToJava android log EGL GLESv2)

@@ -1,9 +1,9 @@
 //
-// Created by kamil7 on 2017-04-06.
+// Created by kamil7 on 2017-04-08.
 //
 
-#ifndef GAME_TRIANGLEOBJECTDESCRIPTION_H
-#define GAME_TRIANGLEOBJECTDESCRIPTION_H
+#ifndef GAME_BOUNDARYDESCRIPTION_H
+#define GAME_BOUNDARYDESCRIPTION_H
 
 #include <android/log.h>
 
@@ -14,13 +14,13 @@
 
 #define  LOG_BOARD_TAG    "BoardDescription"
 
-class BoardDescription: public ModelDescriptionInterface {
+class BoundaryDescription: public ModelDescriptionInterface
+{
 public:
-    BoardDescription();
+    BoundaryDescription();
     std::vector<double> getDrawingPoints(); //return drawing points for OpenGL
 private:
     std::vector<double> _vertexes;
 };
 
-
-#endif //GAME_TRIANGLEOBJECTDESCRIPTION_H
+#endif //GAME_BOUNDARYDESCRIPTION_H

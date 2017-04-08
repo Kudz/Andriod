@@ -75,6 +75,6 @@ GLuint LineShader::getVertexPositionAttributeLocation()
 namespace  LineShaderNamespace {
     void freeBuffers(LineShader *triangleShaderData) {
         //it seems that when new onSurfaceCreated is called there is not possible to detach shaders
-        LOG_LINE_SHADER_I("TriangleShader destructor");
+        LOG_LINE_SHADER_I("LineShader destructor");
     }
 }

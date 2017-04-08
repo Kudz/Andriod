@@ -63,6 +63,17 @@ namespace CppToJava
         std::shared_ptr<TriangleShader> triangleShader(new TriangleShader(vertexShader, fragmentShader), TriangleShaderNamespace::freeBuffers);
         SharedData::setTriangleShader(triangleShader);
 
+        // making line shaders
+        useCunter = SharedData::getLineShader().use_count();
+        if(useCunter)
+        {
+            SharedData::setLineShader(nullptr);
+        }
+        vertexShader = SharedData::getContentOfAssetFile("Shaders/line_shader_v");
+        fragmentShader = SharedData::getContentOfAssetFile("Shaders/line_shader_f");
+        std::shared_ptr<LineShader> lineShader(new LineShader(vertexShader, fragmentShader), LineShaderNamespace::freeBuffers);
+        SharedData::setLineShader(lineShader);
+
         SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, "end of initialization");
     }
 

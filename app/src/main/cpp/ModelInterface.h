@@ -10,11 +10,12 @@
 #include "glm/gtc/type_ptr.hpp" // value_ptr
 #include "glm/ext.hpp" //to_string
 
-class TriangleModelInterface {
+class ModelInterface {
 public:
     virtual glm::vec4 getColourVector() = 0; //return colourVector
+    virtual void setColourVector(float red, float green, float blue, float alpha) = 0;
     virtual glm::mat4 getModelMatrix() = 0;
-    virtual std::string getTriangleDrawingName() = 0;
+    virtual std::string getDrawingName() = 0;
     virtual void update() = 0;
 protected:
     glm::mat4 _modelMatrix; //home position is at identity matrix

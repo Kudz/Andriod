@@ -10,20 +10,20 @@
 #include <GLES2/gl2.h>
 
 #include "SharedData.h"
-#include "TriangleModelInterface.h"
+#include "ModelInterface.h"
 
 #define  LOG_BOARD_TAG    "Board"
 #define  LOG_BOARD_SHADER_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_BOARD_TAG,__VA_ARGS__)
 
-class Board: public TriangleModelInterface
+class Board: public ModelInterface
 {
 public:
     Board();
     void setXPosition(int xPosition);
     glm::vec4 getColourVector();
-    void setColour(float red, float green, float blue, float alpha);
+    void setColourVector(float red, float green, float blue, float alpha);
     glm::mat4 getModelMatrix();
-    std::string getTriangleDrawingName();
+    std::string getDrawingName();
     void update();
 private:
     float _boardWidth;

@@ -9,7 +9,7 @@ TriangleDrawing::TriangleDrawing()
     SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, "TriangleDrawing() won't work, there is a lot of things to activate");
 }
 
-TriangleDrawing::TriangleDrawing(TriangleDescriptionInterface& triangleDescriptionObject)
+TriangleDrawing::TriangleDrawing(ModelDescriptionInterface& triangleDescriptionObject)
 {
 //    this->_drawingObject = drawingObject;
     std::vector<double> vertices = triangleDescriptionObject.getDrawingPoints();
@@ -92,7 +92,7 @@ void TriangleDrawing::draw()
     glUseProgram(0);
 }
 
-void TriangleDrawing::draw(std::shared_ptr<TriangleModelInterface> triangleModelObject)
+void TriangleDrawing::draw(std::shared_ptr<ModelInterface> triangleModelObject)
 {
     glUseProgram(SharedData::getTriangleShader()->getProgramID());
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not use the shader program");

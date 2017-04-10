@@ -11,14 +11,14 @@ Board::Board()
     this->_screenHeight = SharedData::getScreenHeight();
     LOG_BOARD_SHADER_I("screen height = %d", this->_screenHeight);
 
-    this->_boardWidth = 0.4f;
-    this->_boardHeight = 0.04f;
+    this->_boardWidth = 0.6f;
+    this->_boardHeight = 0.08f;
     this->_modelMatrix = glm::mat4(1.0f);
     this->_triangleDrawingName = std::string("Board");
     this->_xMax = 1.0f -0.02f - this->_boardWidth/2;
     this->_xMin = -1.0f + 0.02f + this->_boardWidth/2;
-    this->_yposition = -1.0f + _boardHeight/2 + 0.1f;
-    this->_modelMatrix[3][1] = this->_yposition;
+    this->_yPosition = -1.4f + _boardHeight/2 + 0.1f;
+    this->_modelMatrix[3][1] = this->_yPosition;
 }
 
 glm::vec4 Board::getColourVector()

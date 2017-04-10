@@ -2,8 +2,8 @@
 // Created by kamil7 on 2017-04-06.
 //
 
-#ifndef GAME_TRIANGLEOBJECTDESCRIPTION_H
-#define GAME_TRIANGLEOBJECTDESCRIPTION_H
+#ifndef GAME_BOARDDESCRIPTION_H
+#define GAME_BOARDDESCRIPTION_H
 
 #include <android/log.h>
 

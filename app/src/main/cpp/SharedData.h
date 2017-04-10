@@ -19,6 +19,11 @@
 #include "TriangleShader.h"
 #include "LineShader.h"
 
+#define TOP_SCREEN_POSITION 1.3f
+#define LEFT_SCREEN_POSITION -0.98f
+#define BOTTOM_SCREEN_POSITION -1.3f
+#define RIGHT_SCREEN_POSITION 0.98f
+
 #define  LOG_SHARED_DATA_TAG    "SharedData"
 #define  LOG_SHARED_DATA_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_SHARED_DATA_TAG,__VA_ARGS__)
 

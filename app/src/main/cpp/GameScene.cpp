@@ -30,13 +30,26 @@ GameScene::GameScene()
     message = "GL_INVALID_VALUE = " + a2s<GLfloat>(GL_INVALID_VALUE);
     SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
 
-    std::shared_ptr<TriangleShader> traingleShader = SharedData::getTriangleShader();
-    message = "ProgramID = " + a2s<GLuint>(traingleShader->getProgramID());
-    SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
+//    std::shared_ptr<TriangleShader> traingleShader = SharedData::getTriangleShader();
+//    message = "ProgramID = " + a2s<GLuint>(traingleShader->getProgramID());
+//    SharedData::logInfo(LOG_GAME_SCENE_TAG, message.c_str());
 }
 
 void GameScene::render()
 {
+//    std::string vertexShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_v");
+//    SharedData::logInfo(LOG_GAME_SCENE_TAG, vertexShader.c_str());
+//
+//    std::string fragmentShader = SharedData::getContentOfAssetFile("Shaders/triangle_shader_f");
+//    SharedData::logInfo(LOG_GAME_SCENE_TAG, fragmentShader.c_str());
+
+//    GLint linkStatus = GL_FALSE;
+//    glGetProgramiv(SharedData::getTriangleShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
+//    if(!linkStatus)
+//    {
+//        SharedData::getTriangleShader()->checkCompilationStatus();
+//    }
+
     this->clearBackground();
     this->_boundaryDrawingObject->draw(this->_boundaryModelObject);
     this->updateModels();
@@ -55,18 +68,38 @@ void GameScene::clearBackground()
 
 void GameScene::createTriangleDrawingObjects()
 {
+    this->_triangleDrawingObjects.clear();
+
     BoardDescription boardDescription;
     std::shared_ptr<TriangleDrawing> boardDrawing(new TriangleDrawing(boardDescription));
     this->_triangleDrawingObjects.insert({"Board",std::move(boardDrawing)});
-    //delete this stuff
-    _triangleDrawingObjects.at("Board")->setColour(1.0f, 0.0f, 0.5f, 1.0f);
+
+    BallDescription ballDescription;
+    std::shared_ptr<TriangleDrawing> ballDrawing(new TriangleDrawing(ballDescription));
+    this->_triangleDrawingObjects.insert({"Ball",std::move(ballDrawing)});
+
+    BrickDescription brickDescription;
+    std::shared_ptr<TriangleDrawing> brickDrawing(new TriangleDrawing(brickDescription));
+    this->_triangleDrawingObjects.insert({"Brick",std::move(brickDrawing)});
 }
 
 void GameScene::createTriangleModelObjects()
 {
+    this->_triangleModelObjects.clear();
+
     std::shared_ptr<Board> boardModel(new Board);
     boardModel->setColourVector(0.0f, 0.0f, 1.0f, 1.0f);
     this->_triangleModelObjects.push_back(std::move(boardModel));
+
+    std::shared_ptr<Ball> ballModel(new Ball);
+    ballModel->setColourVector(1.0f, 0.0f, 0.0f, 1.0f);
+    this->_triangleModelObjects.push_back(std::move(ballModel));
+
+    for(uint i = 0; i < 6; i++)
+    {
+        std::shared_ptr<Brick> brickModel(new Brick(-0.77f + i*0.31f, 0.9f));
+        this->_triangleModelObjects.push_back(std::move(brickModel));
+    }
 }
 
 void GameScene::updateModels()

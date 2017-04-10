@@ -1,13 +1,13 @@
 //
-// Created by kamil7 on 2017-04-06.
+// Created by kamil7 on 2017-04-10.
 //
 
-#include "BoardDescription.h"
+#include "BrickDescription.h"
 
-BoardDescription::BoardDescription()
+BrickDescription::BrickDescription()
 {
     this->_vertexes.clear();
-    double xOffset = 0.3;
+    double xOffset = 0.15;
     double yOffset = 0.04;
     double zOffset = 0.0;
 
@@ -36,7 +36,7 @@ BoardDescription::BoardDescription()
     this->_vertexes.push_back(zOffset);
 }
 
-std::vector<double> BoardDescription::getDrawingPoints()
+std::vector<double> BrickDescription::getDrawingPoints()
 {
     return this->_vertexes;
 }

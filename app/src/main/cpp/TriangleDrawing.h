@@ -25,17 +25,12 @@ public:
     TriangleDrawing();
     TriangleDrawing(ModelDescriptionInterface& triangleDescriptionObject);
     ~TriangleDrawing();
-    void setColour(float red, float green, float blue, float alpha);
-    void draw();
     void draw(std::shared_ptr<ModelInterface> triangleModelObject);
-    //~ void updateVertices(GLfloat* vertices); //depreciated
 private:
     //drawing stuff
     GLfloat* Vertices;
     GLuint _buffer;
     int VertexNumber;
-    glm::mat4 _glmM; // drawing purpose
-    glm::vec4 ColourVector;
     void CreateBuffers();
 };
 

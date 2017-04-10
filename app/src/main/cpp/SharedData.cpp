@@ -28,15 +28,25 @@ namespace SharedData
     void setScreenResolution(int width, int height)
     {
         LOG_SHARED_DATA_I("initializing width = %d\n", width);
+        LOG_SHARED_DATA_I("initializing height = %d\n", height);
         screenWidth = width;
-        screenHeight= height;
+        screenHeight = height;
+//        projectionMatrix = glm::perspective(glm::radians(60.0f), (float)width / (float)height, 0.0f, 5.0f);
+//        viewMatrix = glm::mat4(1.0f);
+//        viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, 2.0f));
+        float ratio = (float)height/(float)width;
+        projectionMatrix = glm::ortho(-1.0f, 1.0f, -ratio, ratio, -1.0f, 1.0f);
+        viewMatrix = glm::mat4(1.0f);
+//        viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -2.0f));
+//        projectionMatrix = glm::mat4(1.0f);
+//        viewMatrix = glm::mat4(1.0f);
     }
 
     void setTriangleShader(std::shared_ptr<TriangleShader> triangleShaderData)
     {
-        LOG_SHARED_DATA_I("setTriangleShader beginning");
+//        LOG_SHARED_DATA_I("setTriangleShader beginning");
         triangleShader = std::move(triangleShaderData);
-        LOG_SHARED_DATA_I("setTriangleShader ending");
+//        LOG_SHARED_DATA_I("setTriangleShader ending");
     }
 
     std::shared_ptr<TriangleShader> getTriangleShader()
@@ -135,8 +145,8 @@ namespace SharedData
 
         AAsset_close(assetFile);
 
-        LOG_SHARED_DATA_I("stringStream :");
-        logInfo(LOG_SHARED_DATA_TAG, fromStream.c_str());
+//        LOG_SHARED_DATA_I("stringStream :");
+//        logInfo(LOG_SHARED_DATA_TAG, fromStream.c_str());
 
         return fromStream;
     }

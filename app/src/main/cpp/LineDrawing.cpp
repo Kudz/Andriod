@@ -23,10 +23,10 @@ LineDrawing::LineDrawing(ModelDescriptionInterface& lineDescriptionObject)
 
 void LineDrawing::CreateBuffers()
 {
-    GLint linkStatus = GL_FALSE;
-    glGetProgramiv(SharedData::getLineShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
-    std::string message = "Link Status = " + a2s<GLint>(linkStatus);
-    SharedData::logInfo(LOG_LINE_DRAWING_TAG, message.c_str());
+//    GLint linkStatus = GL_FALSE;
+//    glGetProgramiv(SharedData::getLineShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
+//    std::string message = "Link Status = " + a2s<GLint>(linkStatus);
+//    SharedData::logInfo(LOG_LINE_DRAWING_TAG, message.c_str());
 
     glGenBuffers(1, &this->_buffer);
     SharedData::checkGLError(LOG_LINE_DRAWING_TAG, "ERROR: Could not generate the buffer objects");
@@ -53,6 +53,13 @@ void LineDrawing::draw(std::shared_ptr<ModelInterface> lineModelObject)
 {
     glUseProgram(SharedData::getLineShader()->getProgramID());
     SharedData::checkGLError(LOG_LINE_DRAWING_TAG, "ERROR: Could not use the shader program");
+
+    GLint linkStatus = GL_FALSE;
+    glGetProgramiv(SharedData::getLineShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
+    if(!linkStatus)
+    {
+        SharedData::getLineShader()->checkCompilationStatus();
+    }
 
     glUniformMatrix4fv(SharedData::getLineShader()->getProjectionMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(SharedData::getProjectionMatrix()));
     glUniformMatrix4fv(SharedData::getLineShader()->getViewMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(SharedData::getViewMatrix()));

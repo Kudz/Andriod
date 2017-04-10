@@ -10,7 +10,6 @@ include_directories(${ALL_INCLUDE_DIRS})
 add_library(cppToJava SHARED
     CppToJavaWrapper.cpp
     GameScene.cpp
-    Board.cpp
     Shaders.cpp
     TriangleShader.cpp
     LineShader.cpp
@@ -18,9 +17,14 @@ add_library(cppToJava SHARED
     ModelDescriptionInterface.cpp
     ModelInterface.cpp
     TriangleDrawing.cpp
-    LineDrawing.cpp
+    Board.cpp
     BoardDescription.cpp
+    LineDrawing.cpp
     Boundary.cpp
     BoundaryDescription.cpp
+    Ball.cpp
+    BallDescription.cpp
+    Brick.cpp
+    BrickDescription.cpp
     )
 target_link_libraries(cppToJava android log EGL GLESv2)

@@ -32,7 +32,7 @@ private:
     int _screenHeight;
     float _xMax;
     float _xMin;
-    float _yposition;
+    float _yPosition;
 
     //touching values
     bool _isMoving;

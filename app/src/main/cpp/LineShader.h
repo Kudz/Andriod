@@ -18,19 +18,22 @@ class LineShader
 public:
     LineShader(std::string vertexShader, std::string fragmentShader);
     ~LineShader();
-    GLuint getProgramID(int part);
     GLuint getProgramID();
     GLuint getProjectionMatrixUniformLocation();
     GLuint getViewMatrixUniformLocation();
     GLuint getModelMatrixUniformLocation();
     GLuint getColourVectorUniformLocation();
     GLuint getVertexPositionAttributeLocation();
+    void checkCompilationStatus();
 private:
     GLuint _programID;
     GLuint _vertexShader;
     GLuint _fragmentShader;
-    GLuint ShaderIds[3];
-    void compileProgram(std::string vertexShader, std::string fragmentShader);
+    std::string _vertexShaderString;
+    std::string _fragmentShaderString;
+    const char* _vertexShaderCharArray;
+    const char* _fragmentShaderCharArray;
+    void compileProgram();
 
     GLuint _projectionMatrixUniformLocation;
     GLuint _viewMatrixUniformLocation;

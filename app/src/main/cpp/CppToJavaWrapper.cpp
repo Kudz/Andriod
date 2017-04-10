@@ -27,12 +27,16 @@ namespace CppToJava
 
     JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeScene(JNIEnv *env, jobject instance, jint width, jint height)
     {
+        std::srand( std::time(0) );
+
         // setting scene resolution
         SharedData::setScreenResolution(width, height);
+        SharedData::getTriangleShader()->checkCompilationStatus();
+        SharedData::getLineShader()->checkCompilationStatus();
+//        gameScene->
 
         //making Scene
-//        gameScene = std::shared_ptr<GameScene>(new GameScene);
-        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
+//        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
         LOG_CPP_TO_JAVA_I("scene initializing complete");
     }
 
@@ -48,8 +52,8 @@ namespace CppToJava
 
     JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeShader(JNIEnv *env, jobject instance)
     {
-        std::string message = "use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
-        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
+//        std::string message = "use count = " + a2s<int>(SharedData::getTriangleShader().use_count());
+//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
 
         // making triangle shaders
         int useCunter = SharedData::getTriangleShader().use_count();
@@ -74,26 +78,17 @@ namespace CppToJava
         std::shared_ptr<LineShader> lineShader(new LineShader(vertexShader, fragmentShader), LineShaderNamespace::freeBuffers);
         SharedData::setLineShader(lineShader);
 
-        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, "end of initialization");
+        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, "end of shaders initialization");
     }
 
     JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchMovement(JNIEnv * env, jobject obj, jboolean isMoving, jfloat xPosition, jfloat yPosition)
     {
-//        std::string message = "xDifference = " + a2s<float>(xPosition);
-//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
-//        message = "ScreenWidth = " + a2s<float>((float)SharedData::getScreenWidth());
-//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
-//        float xChange = xDifference*2/(float)SharedData::getScreenWidth();
-//        float yChange = yDifference*2/(float)SharedData::getScreenHeight();
-//        message = "xChange = " + a2s<float>(xChange);
-//        SharedData::logInfo(LOG_CPP_TO_JAVA_TAG, message.c_str());
-//        SharedData::setTouchMovement(isMoving, xChange, yChange);
         SharedData::setTouchMovement(isMoving, xPosition, yPosition);
     }
 
-    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeMatrices(JNIEnv *env, jobject instance)
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_createScenes(JNIEnv *env, jobject instance)
     {
-        SharedData::setProjectionMatrix(glm::mat4(1.0f));
-        SharedData::setViewMatrix(glm::mat4(1.0f));
+        //making Scene
+        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
     }
 }

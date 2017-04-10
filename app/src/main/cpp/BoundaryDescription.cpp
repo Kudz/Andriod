@@ -8,10 +8,15 @@ BoundaryDescription::BoundaryDescription()
 {
     this->_vertexes.clear();
 
-    glm::vec2 point1(-0.98f, -0.9f);
-    glm::vec2 point2(-0.98f, 0.7f);
-    glm::vec2 point3(0.98f, 0.7f);
-    glm::vec2 point4(0.98f, -0.9f);
+//    glm::vec2 point1(-0.98f, -0.9f);
+//    glm::vec2 point2(-0.98f, 0.7f);
+//    glm::vec2 point3(0.98f, 0.7f);
+//    glm::vec2 point4(0.98f, -0.9f);
+
+    glm::vec2 point1(-0.98f, -1.3f);
+    glm::vec2 point2(-0.98f, 1.3f);
+    glm::vec2 point3(0.98f, 1.3f);
+    glm::vec2 point4(0.98f, -1.3f);
 
     auto addPointsToVector = [](std::vector<double>& doubleVector, glm::vec2 firstPoint, glm::vec2 secondPoint)
     {

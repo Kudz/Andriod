@@ -12,13 +12,17 @@
 #include "glm/gtc/type_ptr.hpp" // value_ptr
 #include "glm/ext.hpp" //to_string
 
+#include "SharedData.h"
 #include "LineDrawing.h"
 #include "TriangleDrawing.h"
 #include "Board.h"
 #include "BoardDescription.h"
 #include "Boundary.h"
 #include "BoundaryDescription.h"
-#include "SharedData.h"
+#include "Ball.h"
+#include "BallDescription.h"
+#include "Brick.h"
+#include "BrickDescription.h"
 
 #define  LOG_GAME_SCENE_TAG    "GameScene"
 

@@ -300,7 +300,7 @@ public class MyView extends GLSurfaceView
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             Log.w(TAG, "onSurfaceCreated");
             JavaToCppWrapper.initializeShader();
-            JavaToCppWrapper.initializeMatrices();
+            JavaToCppWrapper.createScenes();
         }
 
     }

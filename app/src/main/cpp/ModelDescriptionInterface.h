@@ -11,7 +11,7 @@
 class ModelDescriptionInterface
 {
 public:
-    virtual std::vector<double> getDrawingPoints() = 0; //return drawing points for OpenGL
+    virtual std::vector<float> getDrawingPoints() = 0; //return drawing points for OpenGL
 };
 
 

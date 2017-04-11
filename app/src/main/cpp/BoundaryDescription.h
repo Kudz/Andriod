@@ -18,9 +18,9 @@ class BoundaryDescription: public ModelDescriptionInterface
 {
 public:
     BoundaryDescription();
-    std::vector<double> getDrawingPoints(); //return drawing points for OpenGL
+    std::vector<float> getDrawingPoints(); //return drawing points for OpenGL
 private:
-    std::vector<double> _vertexes;
+    std::vector<float> _vertexes;
 };
 
 #endif //GAME_BOUNDARYDESCRIPTION_H

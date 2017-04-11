@@ -7,8 +7,8 @@
 BoardDescription::BoardDescription()
 {
     this->_vertexes.clear();
-    double xOffset = 0.3;
-    double yOffset = 0.04;
+    double xOffset = BOARD_WIDTH/2;
+    double yOffset = BOARD_HEIGHT/2;
     double zOffset = 0.0;
 
     this->_vertexes.push_back(-xOffset);
@@ -36,7 +36,7 @@ BoardDescription::BoardDescription()
     this->_vertexes.push_back(zOffset);
 }
 
-std::vector<double> BoardDescription::getDrawingPoints()
+std::vector<float> BoardDescription::getDrawingPoints()
 {
     return this->_vertexes;
 }

@@ -6,10 +6,10 @@
 
 BallDescription::BallDescription()
 {
-    std::vector<glm::vec2> circlePoints = this->createCircle(0.04f, 20);
+    std::vector<glm::vec2> circlePoints = this->createCircle(BALL_RADIUS, 20);
     this->_vertexes.clear();
 
-    auto addPointsToVector = [](std::vector<double>& doubleVector, glm::vec2 firstPoint, glm::vec2 secondPoint)
+    auto addPointsToVector = [](std::vector<float>& doubleVector, glm::vec2 firstPoint, glm::vec2 secondPoint)
     {
         doubleVector.push_back(0.0f);
         doubleVector.push_back(0.0f);
@@ -39,7 +39,7 @@ BallDescription::BallDescription()
 //    SharedData::logInfo(LOG_BALL_TAG, "end Of Ball description constructor");
 }
 
-std::vector<double> BallDescription::getDrawingPoints()
+std::vector<float> BallDescription::getDrawingPoints()
 {
     return this->_vertexes;
 }

@@ -26,5 +26,8 @@ add_library(cppToJava SHARED
     BallDescription.cpp
     Brick.cpp
     BrickDescription.cpp
+    LetterBase.cpp
+    LineText.cpp
+    LineTextDescription;
     )
 target_link_libraries(cppToJava android log EGL GLESv2)

@@ -19,10 +19,22 @@
 #include "TriangleShader.h"
 #include "LineShader.h"
 
-#define TOP_SCREEN_POSITION 1.3f
+#define TOP_SCREEN_POSITION 1.15f
 #define LEFT_SCREEN_POSITION -0.98f
 #define BOTTOM_SCREEN_POSITION -1.3f
 #define RIGHT_SCREEN_POSITION 0.98f
+
+#define BOARD_WIDTH 0.6f
+#define BOARD_HEIGHT 0.08f
+
+#define BRICK_WIDTH 0.3f
+#define BRICK_HEIGHT 0.08f
+
+#define BALL_RADIUS 0.04f
+#define BALL_MIN_SPEED 0.03f
+#define BALL_MAX_SPEED 0.09f
+
+#define LETTER_SIZE 0.1f
 
 #define  LOG_SHARED_DATA_TAG    "SharedData"
 #define  LOG_SHARED_DATA_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_SHARED_DATA_TAG,__VA_ARGS__)
@@ -59,11 +71,14 @@ namespace SharedData
     std::shared_ptr<LineShader> getLineShader();
     int getScreenWidth();
     int getScreenHeight();
-    void setTouchMovement(bool isMovingData, float xMovementData, float yMovementData);
-    void setTouchMovementData(float xMovementData, float yMovementData);
+    void setTouchMovement(bool isMovingData, float xMovementData, float yMovementData); //depricated
+    void setTouchPosition(float xTouchPositionData, float yTouchPositionData);
+    void setTouchStatus(bool isTouchingData);
+    bool getTouchingStatus();
     float getXTouchPosition();
     float getYTouchPosition();
-    bool getMovementStatus();
+
+    bool getMovementStatus(); //depricated
     void setProjectionMatrix(glm::mat4 projectionMatrixData);
     void setViewMatrix(glm::mat4 viewMatrixData);
     glm::mat4 getProjectionMatrix();

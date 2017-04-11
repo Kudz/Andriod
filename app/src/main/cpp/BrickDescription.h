@@ -15,9 +15,9 @@
 class BrickDescription: public ModelDescriptionInterface {
 public:
     BrickDescription();
-    std::vector<double> getDrawingPoints(); //return drawing points for OpenGL
+    std::vector<float> getDrawingPoints(); //return drawing points for OpenGL
 private:
-    std::vector<double> _vertexes;
+    std::vector<float> _vertexes;
 };
 
 

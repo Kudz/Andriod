@@ -6,6 +6,7 @@
 
 Boundary::Boundary()
 {
+    this->_isVisible = true;
     this->_modelMatrix = glm::mat4(1.0f);
     this->_triangleDrawingName = std::string("Boundary");
 }
@@ -32,7 +33,12 @@ std::string Boundary::getDrawingName()
     return this->_triangleDrawingName;
 }
 
-void Boundary::update()
+void Boundary::setVisibility(bool value)
 {
+    this->_isVisible = value;
+}
 
+bool Boundary::getVisibility()
+{
+    return this->_isVisible;
 }

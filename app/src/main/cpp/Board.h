@@ -25,11 +25,10 @@ public:
     glm::mat4 getModelMatrix();
     std::string getDrawingName();
     void update();
+    void setVisibility(bool value);
+    bool getVisibility();
+    void resetBoard();
 private:
-    float _boardWidth;
-    float _boardHeight;
-    int _screenWidth;
-    int _screenHeight;
     float _xMax;
     float _xMin;
     float _yPosition;

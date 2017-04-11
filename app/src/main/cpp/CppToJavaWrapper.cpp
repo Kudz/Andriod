@@ -36,7 +36,7 @@ namespace CppToJava
 //        gameScene->
 
         //making Scene
-//        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
+        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
         LOG_CPP_TO_JAVA_I("scene initializing complete");
     }
 
@@ -86,9 +86,19 @@ namespace CppToJava
         SharedData::setTouchMovement(isMoving, xPosition, yPosition);
     }
 
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchPosition(JNIEnv * env, jobject obj, jfloat xTouchPosition, jfloat yTouchPosition)
+    {
+        SharedData::setTouchPosition(xTouchPosition, yTouchPosition);
+    }
+
+    JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchStatus(JNIEnv * env, jobject obj, jboolean isTouching)
+    {
+        SharedData::setTouchStatus(isTouching);
+    }
+
     JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_createScenes(JNIEnv *env, jobject instance)
     {
         //making Scene
-        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
+//        gameScene = std::move(std::shared_ptr<GameScene>(new GameScene));
     }
 }

@@ -11,7 +11,7 @@ LineDrawing::LineDrawing()
 
 LineDrawing::LineDrawing(ModelDescriptionInterface& lineDescriptionObject)
 {
-    std::vector<double> vertices = lineDescriptionObject.getDrawingPoints();
+    std::vector<float> vertices = lineDescriptionObject.getDrawingPoints();
     this->VertexNumber = vertices.size()/3;
     this->Vertices = new GLfloat[this->VertexNumber*3];
     for(int i = 0; i < this->VertexNumber*3; i++)
@@ -51,15 +51,20 @@ LineDrawing::~LineDrawing()
 
 void LineDrawing::draw(std::shared_ptr<ModelInterface> lineModelObject)
 {
+    if(lineModelObject->getVisibility() == false)
+    {
+        return;
+    }
+
     glUseProgram(SharedData::getLineShader()->getProgramID());
     SharedData::checkGLError(LOG_LINE_DRAWING_TAG, "ERROR: Could not use the shader program");
 
-    GLint linkStatus = GL_FALSE;
-    glGetProgramiv(SharedData::getLineShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
-    if(!linkStatus)
-    {
-        SharedData::getLineShader()->checkCompilationStatus();
-    }
+//    GLint linkStatus = GL_FALSE;
+//    glGetProgramiv(SharedData::getLineShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
+//    if(!linkStatus)
+//    {
+//        SharedData::getLineShader()->checkCompilationStatus();
+//    }
 
     glUniformMatrix4fv(SharedData::getLineShader()->getProjectionMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(SharedData::getProjectionMatrix()));
     glUniformMatrix4fv(SharedData::getLineShader()->getViewMatrixUniformLocation(), 1, GL_FALSE, glm::value_ptr(SharedData::getViewMatrix()));

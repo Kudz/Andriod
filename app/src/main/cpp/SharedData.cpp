@@ -11,9 +11,16 @@ namespace SharedData
         AAssetManager* assetManager;
         int screenWidth = 0;
         int screenHeight = 0;
+
+        //depricated
         bool isMoving = false;
         float xMovement = 0.0f;
         float yMovement = 0.0f;
+
+        float xTouchPosition = 0.0f;
+        float yTouchPosition = 0.0f;
+        bool isTouching = false;
+
         std::shared_ptr<TriangleShader> triangleShader;
         std::shared_ptr<LineShader> lineShader;
         glm::mat4 projectionMatrix;
@@ -64,11 +71,15 @@ namespace SharedData
         return lineShader;
     }
 
-    void setTouchMovementData(float xMovementData, float yMovementData)
+    void setTouchPosition(float xTouchPositionData, float yTouchPositionData)
     {
-//        LOG_SHARED_DATA_I("setTouchMovement dx = %f", xMovementData);
-        xMovement = xMovementData;
-        yMovement = yMovementData;
+        xTouchPosition = xTouchPositionData;
+        yTouchPosition = yTouchPositionData;
+    }
+
+    void setTouchStatus(bool isTouchingData)
+    {
+        isTouching = isTouchingData;
     }
 
     void setTouchMovement(bool isMovingData, float xMovementData, float yMovementData)
@@ -81,12 +92,19 @@ namespace SharedData
 
     float getXTouchPosition()
     {
-        return xMovement;
+        return xTouchPosition;
+//        return xMovement;
     }
 
     float getYTouchPosition()
     {
-        return yMovement;
+//        return yMovement;
+        return yTouchPosition;
+    }
+
+    bool getTouchingStatus()
+    {
+        return isTouching;
     }
 
     bool getMovementStatus()

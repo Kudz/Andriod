@@ -7,9 +7,9 @@
 BrickDescription::BrickDescription()
 {
     this->_vertexes.clear();
-    double xOffset = 0.15;
-    double yOffset = 0.04;
-    double zOffset = 0.0;
+    float xOffset = BRICK_WIDTH/2;
+    float yOffset = BRICK_HEIGHT/2;
+    float zOffset = 0.0;
 
     this->_vertexes.push_back(-xOffset);
     this->_vertexes.push_back(yOffset);
@@ -36,7 +36,7 @@ BrickDescription::BrickDescription()
     this->_vertexes.push_back(zOffset);
 }
 
-std::vector<double> BrickDescription::getDrawingPoints()
+std::vector<float> BrickDescription::getDrawingPoints()
 {
     return this->_vertexes;
 }

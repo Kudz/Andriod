@@ -2,9 +2,8 @@
 // Created by kamil7 on 2017-04-10.
 //
 
-#ifndef GAME_BRICK_H
-#define GAME_BRICK_H
-
+#ifndef GAME_LINETEXT_H
+#define GAME_LINETEXT_H
 
 #include <android/log.h>
 
@@ -12,25 +11,24 @@
 
 #include "SharedData.h"
 #include "ModelInterface.h"
+#include "LineDrawing.h"
+#include "LineTextDescription.h"
 
-#define  LOG_BRICK_TAG    "Brick"
-#define  LOG_BRICK_SHADER_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_BRICK_TAG,__VA_ARGS__)
+#define  LOG_LINE_TEXT_TAG    "LineText"
 
-class Brick: public ModelInterface
+class LineText: public ModelInterface
 {
 public:
-    Brick(float xPosition, float yPosition);
+    LineText(std::string text, float xPosition, float yPosition);
     glm::vec4 getColourVector();
     void setColourVector(float red, float green, float blue, float alpha);
     glm::mat4 getModelMatrix();
     std::string getDrawingName();
+    void update();
     void setVisibility(bool value);
     bool getVisibility();
 private:
-    float _xPosition;
-    float _yPosition;
-    void generateRandomColour();
-    float getFloat();
+    std::shared_ptr<LineDrawing> _lineDrwawing;
 };
 
-#endif //GAME_BRICK_H
+#endif //GAME_LINETEXT_H

@@ -6,6 +6,7 @@
 
 Brick::Brick(float xPosition, float yPosition)
 {
+    this->_isVisible = true;
     this->_modelMatrix = glm::mat4(1.0f);
     this->_triangleDrawingName = std::string("Brick");
 
@@ -49,7 +50,12 @@ std::string Brick::getDrawingName()
     return this->_triangleDrawingName;
 }
 
-void Brick::update()
+void Brick::setVisibility(bool value)
 {
+    this->_isVisible = value;
+}
 
+bool Brick::getVisibility()
+{
+    return this->_isVisible;
 }

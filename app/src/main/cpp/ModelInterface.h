@@ -16,11 +16,13 @@ public:
     virtual void setColourVector(float red, float green, float blue, float alpha) = 0;
     virtual glm::mat4 getModelMatrix() = 0;
     virtual std::string getDrawingName() = 0;
-    virtual void update() = 0;
+    virtual void setVisibility(bool value) = 0;
+    virtual bool getVisibility() = 0;
 protected:
     glm::mat4 _modelMatrix; //home position is at identity matrix
     glm::vec4 _colour;
     std::string _triangleDrawingName;
+    bool _isVisible;
 };
 
 

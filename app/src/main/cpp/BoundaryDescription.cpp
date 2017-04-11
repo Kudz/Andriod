@@ -13,12 +13,12 @@ BoundaryDescription::BoundaryDescription()
 //    glm::vec2 point3(0.98f, 0.7f);
 //    glm::vec2 point4(0.98f, -0.9f);
 
-    glm::vec2 point1(-0.98f, -1.3f);
-    glm::vec2 point2(-0.98f, 1.3f);
-    glm::vec2 point3(0.98f, 1.3f);
-    glm::vec2 point4(0.98f, -1.3f);
+    glm::vec2 point1(LEFT_SCREEN_POSITION, BOTTOM_SCREEN_POSITION);
+    glm::vec2 point2(LEFT_SCREEN_POSITION, TOP_SCREEN_POSITION);
+    glm::vec2 point3(RIGHT_SCREEN_POSITION, TOP_SCREEN_POSITION);
+    glm::vec2 point4(RIGHT_SCREEN_POSITION, BOTTOM_SCREEN_POSITION);
 
-    auto addPointsToVector = [](std::vector<double>& doubleVector, glm::vec2 firstPoint, glm::vec2 secondPoint)
+    auto addPointsToVector = [](std::vector<float>& doubleVector, glm::vec2 firstPoint, glm::vec2 secondPoint)
     {
         doubleVector.push_back(firstPoint[0]);
         doubleVector.push_back(firstPoint[1]);
@@ -35,7 +35,7 @@ BoundaryDescription::BoundaryDescription()
     addPointsToVector(this->_vertexes, point4, point1);
 }
 
-std::vector<double> BoundaryDescription::getDrawingPoints()
+std::vector<float> BoundaryDescription::getDrawingPoints()
 {
     return this->_vertexes;
 }

@@ -22,7 +22,8 @@ public:
     void setColourVector(float red, float green, float blue, float alpha);
     glm::mat4 getModelMatrix();
     std::string getDrawingName();
-    void update();
+    void setVisibility(bool value);
+    bool getVisibility();
 private:
 
 };

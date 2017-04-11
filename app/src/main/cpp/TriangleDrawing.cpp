@@ -11,7 +11,7 @@ TriangleDrawing::TriangleDrawing()
 
 TriangleDrawing::TriangleDrawing(ModelDescriptionInterface& triangleDescriptionObject)
 {
-    std::vector<double> vertices = triangleDescriptionObject.getDrawingPoints();
+    std::vector<float> vertices = triangleDescriptionObject.getDrawingPoints();
     this->VertexNumber = vertices.size()/3;
     this->Vertices = new GLfloat[this->VertexNumber*3];
     for(int i = 0; i < this->VertexNumber*3; i++)
@@ -51,15 +51,20 @@ TriangleDrawing::~TriangleDrawing()
 
 void TriangleDrawing::draw(std::shared_ptr<ModelInterface> triangleModelObject)
 {
+    if(triangleModelObject->getVisibility() == false)
+    {
+        return;
+    }
+
     glUseProgram(SharedData::getTriangleShader()->getProgramID());
     SharedData::checkGLError(LOG_TRIANGLE_DRAWING_TAG, "ERROR: Could not use the shader program");
 
-    GLint linkStatus = GL_FALSE;
-    glGetProgramiv(SharedData::getTriangleShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
-    if(!linkStatus)
-    {
-        SharedData::getTriangleShader()->checkCompilationStatus();
-    }
+//    GLint linkStatus = GL_FALSE;
+//    glGetProgramiv(SharedData::getTriangleShader()->getProgramID(), GL_LINK_STATUS, &linkStatus);
+//    if(!linkStatus)
+//    {
+//        SharedData::getTriangleShader()->checkCompilationStatus();
+//    }
 //    std::string message = "Link Status in drawing = " + a2s<GLint>(linkStatus);
 //    SharedData::logInfo(LOG_TRIANGLE_DRAWING_TAG, message.c_str());
 

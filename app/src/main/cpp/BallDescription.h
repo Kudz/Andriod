@@ -20,9 +20,9 @@ class BallDescription: public ModelDescriptionInterface
 {
 public:
     BallDescription();
-    std::vector<double> getDrawingPoints(); //return drawing points for OpenGL
+    std::vector<float> getDrawingPoints(); //return drawing points for OpenGL
 private:
-    std::vector<double> _vertexes;
+    std::vector<float> _vertexes;
     std::vector<glm::vec2> createCircle(float radius, int pointsAmount);
 };
 

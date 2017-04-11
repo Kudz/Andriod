@@ -17,9 +17,9 @@
 class BoardDescription: public ModelDescriptionInterface {
 public:
     BoardDescription();
-    std::vector<double> getDrawingPoints(); //return drawing points for OpenGL
+    std::vector<float> getDrawingPoints(); //return drawing points for OpenGL
 private:
-    std::vector<double> _vertexes;
+    std::vector<float> _vertexes;
 };
 
 

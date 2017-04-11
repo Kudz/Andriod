@@ -37,6 +37,8 @@ namespace CppToJava
         JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_cleanScene(JNIEnv *env, jobject instance);
         JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_initializeShader(JNIEnv *env, jobject instance);
         JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchMovement(JNIEnv * env, jobject obj, jboolean isMoving, jfloat xPosition, jfloat yPosition);
+        JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchPosition(JNIEnv * env, jobject obj, jfloat xTouchPosition, jfloat yTouchPosition);
+        JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_setTouchStatus(JNIEnv * env, jobject obj, jboolean isTouching);
         JNIEXPORT void JNICALL Java_kuklinski_kamil_game_JavaToCppWrapper_createScenes(JNIEnv *env, jobject instance);
     }
 };

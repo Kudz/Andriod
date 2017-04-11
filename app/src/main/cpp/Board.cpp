@@ -7,17 +7,12 @@
 Board::Board()
 : _isMoving(false)
 {
-    //do I need that?
-    this->_screenHeight = SharedData::getScreenHeight();
-    LOG_BOARD_SHADER_I("screen height = %d", this->_screenHeight);
-
-    this->_boardWidth = 0.6f;
-    this->_boardHeight = 0.08f;
+    this->_isVisible = true;
     this->_modelMatrix = glm::mat4(1.0f);
     this->_triangleDrawingName = std::string("Board");
-    this->_xMax = 1.0f -0.02f - this->_boardWidth/2;
-    this->_xMin = -1.0f + 0.02f + this->_boardWidth/2;
-    this->_yPosition = -1.4f + _boardHeight/2 + 0.1f;
+    this->_xMax = RIGHT_SCREEN_POSITION - BOARD_WIDTH/2;
+    this->_xMin = LEFT_SCREEN_POSITION + BOARD_WIDTH/2;
+    this->_yPosition = BOTTOM_SCREEN_POSITION + BOARD_HEIGHT/2;
     this->_modelMatrix[3][1] = this->_yPosition;
 }
 
@@ -57,16 +52,7 @@ float Board::normalizePosition(float screenPosition)
 
 void Board::update()
 {
-    bool isTouching = SharedData::getMovementStatus();
-
-//    std::string message = "isTouching = " + a2s<bool>(isTouching);
-//    SharedData::logInfo(LOG_BOARD_TAG, message.c_str());
-
-//    message = "this->_isMoving = " + a2s<bool>(this->_isMoving);
-//    SharedData::logInfo(LOG_BOARD_TAG, message.c_str());
-
-//    message = "this->_savedXPositionNorm = " + a2s<bool>(this->_savedXPositionNorm);
-//    SharedData::logInfo(LOG_BOARD_TAG, message.c_str());
+    bool isTouching = SharedData::getTouchingStatus();
 
     if(this->_isMoving)
     {
@@ -106,4 +92,20 @@ void Board::update()
             this->_isMoving = true;
         }
     }
+}
+
+void Board::setVisibility(bool value)
+{
+    this->_isVisible = value;
+}
+
+bool Board::getVisibility()
+{
+    return this->_isVisible;
+}
+
+void Board::resetBoard()
+{
+    this->_modelMatrix[3][0] = 0.0f;
+    this->_modelMatrix[3][1] = this->_yPosition;
 }

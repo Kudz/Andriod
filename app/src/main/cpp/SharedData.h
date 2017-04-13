@@ -32,9 +32,10 @@
 
 #define BALL_RADIUS 0.04f
 #define BALL_MIN_SPEED 0.03f
-#define BALL_MAX_SPEED 0.09f
+#define BALL_MAX_SPEED 0.08f
 
 #define LETTER_SIZE 0.1f
+#define NUMBER_SIZE 0.1f
 
 #define  LOG_SHARED_DATA_TAG    "SharedData"
 #define  LOG_SHARED_DATA_I(...)  __android_log_print(ANDROID_LOG_INFO,LOG_SHARED_DATA_TAG,__VA_ARGS__)

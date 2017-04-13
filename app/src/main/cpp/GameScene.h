@@ -24,14 +24,20 @@
 #include "Brick.h"
 #include "BrickDescription.h"
 #include "lineText.h"
+#include "Number.h"
 
 #define  LOG_GAME_SCENE_TAG    "GameScene"
+
+enum collision{COLLISION_BOTTOM, COLLISION_RIGHT, COLLISION_LEFT, COLLISION_TOP, COLLISION_BOTTOM_RIGHT, COLLISION_BOTTOM_LEFT, COLLISION_TOP_RIGHT, COLLISION_TOP_LEFT};
 
 typedef std::unordered_map<std::string, std::shared_ptr<TriangleDrawing> > TriangleDrawingObjects;
 typedef std::vector<std::shared_ptr<ModelInterface> > TriangleModelObjects;
 
-typedef std::unordered_map<std::string, std::shared_ptr<LineDrawing> >LineTextDrawingObjects;
+typedef std::unordered_map<std::string, std::shared_ptr<LineDrawing> > LineTextDrawingObjects;
 typedef std::vector<std::shared_ptr<LineText> > LineTextModelObjects;
+
+typedef std::unordered_map<std::string, std::shared_ptr<LineDrawing> > NumberDrawingObjects;
+typedef std::vector<std::shared_ptr<Number> > NumberModelObjects;
 
 class GameScene
 {
@@ -48,6 +54,9 @@ private:
     void createLineTextDrawingObjects();
     void createLineTextModelObjects();
 
+    void createNumberDrawingObjects();
+    void createNumberModelObjects();
+
     //TriangleDescriptionObjects
     TriangleDrawingObjects _triangleDrawingObjects;
     TriangleModelObjects _triangleModelObjects;
@@ -58,19 +67,32 @@ private:
     LineTextDrawingObjects _lineTextDrawingObjects;
     LineTextModelObjects _lineTextModelObjects;
 
+    NumberDrawingObjects _numberDrawingObjects;
+    NumberModelObjects _numberModelObjects;
+
     //Game Status
     bool _isPaused;
+    bool _isEnded;
     std::shared_ptr<Ball> _ball;
     std::shared_ptr<Board> _board;
+    void newBall();
+    void restart();
 
     bool checkCollisionBallBoard(glm::vec2 stepTranslation);
-    bool checkCollisionBallBricks(glm::vec2 stepTranslation);
     bool checkCollisionBallBoundaries(glm::vec2 stepTranslation);
 
+    bool checkCollisionBallBrick(std::shared_ptr<ModelInterface> brickObject);
+    bool checkCollisionBallBricks(std::vector<std::shared_ptr<ModelInterface> > brickObjects);
+    collision findPossibleCollisionSides(glm::vec2 stepMovementVector);
+    std::pair<float, float> computePercentageDistance(float fromPosition, float toPosition, float stepValue);
+    std::pair<collision, float>  findCollisionSideAndMovementDistance(collision posibleCollisionSides, glm::vec2 stepMovementVector, glm::mat4 ballModelMatrixData, std::shared_ptr<ModelInterface> brickObject);
+    bool manageBallAfterCollisionWithBrick(collision collisionSide, float distance, std::shared_ptr<ModelInterface> brickObject, glm::vec2 stepMovementVector, glm::mat4 ballModelMatrix);
+    bool manageBallAfterCollisionWithBricks(std::vector<collision> collisionSides, std::vector<float> distances, std::vector<std::shared_ptr<ModelInterface> > brickObject, glm::vec2 stepMovementVector, glm::mat4 ballModelMatrix);
+//    bool checkBrickCollisionStatus(collision collisionSide, glm::vec2 stepMovementVector, std::shared_ptr<ModelInterface> brickObjects, glm::mat4 ballModelMatrix);
 
     //Player Stats
-    int _playerLifes;
     TriangleModelObjects _lifesModelObjects;
+    int _playerLifes;
     int _playerScore;
 };
 

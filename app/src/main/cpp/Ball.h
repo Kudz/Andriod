@@ -41,6 +41,7 @@ public:
     void increaseDirectionAngle(float angleChange);
     void reverseX();
     void reverseY();
+    void reverseXY();
     void resetBall();
 private:
     glm::vec2 _homePosition;

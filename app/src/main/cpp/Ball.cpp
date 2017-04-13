@@ -205,6 +205,18 @@ void Ball::reverseY()
     this->computeMovementVector();
 }
 
+void Ball::reverseXY()
+{
+    this->_movmentVector[0] = -this->_movmentVector[0];
+    this->_movmentVector[1] = -this->_movmentVector[1];
+    this->_directionAngle = atan2(this->_movmentVector[1], this->_movmentVector[0]);
+    if(this->_directionAngle < 0.0f)
+    {
+        this->_directionAngle = 2*M_PI + this->_directionAngle;
+    }
+    this->computeMovementVector();
+}
+
 void Ball::resetBall()
 {
     this->setHomePosition();

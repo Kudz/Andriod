@@ -29,5 +29,8 @@ add_library(cppToJava SHARED
     LetterBase.cpp
     LineText.cpp
     LineTextDescription;
+    NumberBase.cpp
+    Number.cpp
+    NumberDescription.cpp
     )
 target_link_libraries(cppToJava android log EGL GLESv2)
